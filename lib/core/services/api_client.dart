@@ -7,7 +7,12 @@ class ApiClient {
 
   static Future<Map<String, String>> _buildHeaders() async {
     final token = await SecureStorageService.getToken();
-    return {'Content-Type': 'application/json', if (token != null) 'Authorization': 'Bearer $token'};
+    
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
   }
 
   static Uri _buildUri(String endpoint) {
