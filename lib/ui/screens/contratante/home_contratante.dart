@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
-import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 
 class HomeContratante extends StatelessWidget {
@@ -19,9 +18,7 @@ class HomeContratante extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileContratante()));
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/contratante/profile'),
                     child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: AppColors.primary,

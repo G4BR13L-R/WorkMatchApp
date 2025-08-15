@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
-import 'package:work_match_app/ui/screens/contratante/change_password.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -58,9 +57,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
                 width: double.infinity,
                 child: CustomButton(
                   text: "Alterar Senha",
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const ChangePassword()));
-                  },
+                  onPressed: () => Navigator.pushNamed(context, '/contratante/change_password'),
                 ),
               ),
               const SizedBox(height: 24),
@@ -122,7 +119,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
                   text: "Sair",
                   backgroundColor: AppColors.warning,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const ChangePassword()));
+                    // Ação de logout
                   },
                 ),
               ),

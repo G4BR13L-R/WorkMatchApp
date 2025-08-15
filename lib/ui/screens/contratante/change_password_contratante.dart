@@ -4,14 +4,14 @@ import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ChangePasswordContratante extends StatefulWidget {
+  const ChangePasswordContratante({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ChangePasswordContratante> createState() => _ChangePasswordContratanteState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePasswordContratanteState extends State<ChangePasswordContratante> {
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmNewPassword = TextEditingController();

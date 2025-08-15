@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
-import 'package:work_match_app/ui/screens/auth/account_type.dart';
-import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
+import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/data/models/user_model.dart';
+import 'package:work_match_app/ui/controllers/auth_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -16,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthController _authController = AuthController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -60,20 +63,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Botão Entrar
                   SizedBox(
                     width: double.infinity,
-                    child: CustomButton(
-                      text: "Entrar",
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeContratante()));
-                      },
-                    ),
+                    child: CustomButton(text: "Entrar", onPressed: () => _isLoading ? null : _loginUser()),
                   ),
                   const SizedBox(height: 16),
 
                   // Cadastro
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AccountType()));
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/account_type'),
                     child: const Text("Não tem cadastro? Cadastre-se", style: AppTextStyles.subtitle),
                   ),
                 ],
@@ -83,5 +79,28 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _loginUser() async {
+    setState(() => _isLoading = true);
+
+    try {
+      UserModel userModel = await _authController.login(_emailController.text.trim(), _passwordController.text.trim());
+
+      if (!mounted) return;
+
+      SnackbarHelper.showSuccess(context, "Login realizado com sucesso!");
+
+      if (userModel.tipo == 'contratante') {
+        Navigator.pushReplacementNamed(context, '/contratante/home');
+      } else {
+        // Navigator.pushReplacementNamed(context, '/contratado/home');
+      }
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 }

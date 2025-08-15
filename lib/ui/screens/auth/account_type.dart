@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
-import 'package:work_match_app/ui/screens/auth/contratante_register.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 
 class AccountType extends StatelessWidget {
@@ -25,9 +24,7 @@ class AccountType extends StatelessWidget {
                   width: double.infinity,
                   child: CustomButton(
                     text: "Contratante",
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const ContratanteRegister()));
-                    },
+                    onPressed: () => Navigator.pushNamed(context, '/contratante/register'),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -37,7 +34,7 @@ class AccountType extends StatelessWidget {
                   child: CustomButton(
                     text: "Contratado",
                     onPressed: () {
-                      // futuramente irá para a tela de cadastro de contratado
+                      // Navigator.pushNamed(context, '/contratado/register');
                     },
                   ),
                 ),
