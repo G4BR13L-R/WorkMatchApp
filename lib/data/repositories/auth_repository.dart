@@ -27,7 +27,14 @@ class AuthRepository {
       throw Exception('Erro de comunicação com o servidor.');
     }
 
-    throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+    if (errorData.containsKey('errors')) {
+      final firstKey = errorData['errors'].keys.first;
+      final firstError = errorData['errors'][firstKey][0];
+
+      throw Exception(firstError);
+    } else {
+      throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+    }
   }
 
   Future<bool> logout() async {
