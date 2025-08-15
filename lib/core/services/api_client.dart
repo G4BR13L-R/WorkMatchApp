@@ -7,7 +7,7 @@ class ApiClient {
 
   static Future<Map<String, String>> _buildHeaders() async {
     final token = await SecureStorageService.getToken();
-    
+
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

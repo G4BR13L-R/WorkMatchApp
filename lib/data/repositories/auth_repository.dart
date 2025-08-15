@@ -19,12 +19,15 @@ class AuthRepository {
       return UserModel.fromJson(data['user']);
     }
 
+    Map<String, dynamic> errorData;
+
     try {
-      final errorData = jsonDecode(response.body);
-      throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+      errorData = jsonDecode(response.body);
     } catch (e) {
       throw Exception('Erro de comunicação com o servidor.');
     }
+
+    throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
   }
 
   Future<bool> logout() async {
