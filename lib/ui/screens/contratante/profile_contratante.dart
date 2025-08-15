@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/ui/controllers/auth_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -22,6 +24,8 @@ class _ProfileContratanteState extends State<ProfileContratante> {
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
+  final AuthController authController = AuthController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -118,9 +122,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
                 child: CustomButton(
                   text: "Sair",
                   backgroundColor: AppColors.warning,
-                  onPressed: () {
-                    // Ação de logout
-                  },
+                  onPressed: () => _isLoading ? null : _logout(),
                 ),
               ),
             ],
@@ -128,5 +130,23 @@ class _ProfileContratanteState extends State<ProfileContratante> {
         ),
       ),
     );
+  }
+
+  Future<void> _logout() async {
+    setState(() => _isLoading = true);
+
+    bool logout = await authController.logout();
+
+    if (!mounted) return;
+
+    if (!logout) {
+      SnackbarHelper.showSuccess(context, "Falha ao realizar logout!");
+      return;
+    }
+
+    SnackbarHelper.showSuccess(context, "Logout realizado com sucesso!");
+    Navigator.pushReplacementNamed(context, '/');
+
+    setState(() => _isLoading = false);
   }
 }
