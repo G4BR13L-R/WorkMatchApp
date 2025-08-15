@@ -1,0 +1,18 @@
+import 'package:work_match_app/data/models/user_model.dart';
+import 'package:work_match_app/data/repositories/auth_repository.dart';
+
+class AuthController {
+  final AuthRepository _repository = AuthRepository();
+
+  Future<UserModel> login(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      throw Exception("Preencha todos os campos");
+    }
+
+    return await _repository.login(email, password);
+  }
+
+  Future<bool> logout() async {
+    return await _repository.logout();
+  }
+}
