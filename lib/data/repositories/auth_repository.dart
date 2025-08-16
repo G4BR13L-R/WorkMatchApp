@@ -39,7 +39,10 @@ class AuthRepository {
 
   Future<bool> logout() async {
     final response = await ApiClient.delete('/sessions');
-    await SecureStorageService.deleteToken();
-    return response.statusCode == 200;
+
+    bool status = response.statusCode == 200 ? true : false;
+    if (status) await SecureStorageService.deleteToken();
+
+    return status;
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:work_match_app/ui/screens/auth/account_type.dart';
-import 'package:work_match_app/ui/screens/auth/contratante_register.dart';
 import 'package:work_match_app/ui/screens/auth/login.dart';
-import 'package:work_match_app/ui/screens/contratante/change_password_contratante.dart';
+import 'package:work_match_app/ui/screens/auth/account_type.dart';
+import 'package:work_match_app/ui/screens/contratante/contratante_register.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/change_password_contratante.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
