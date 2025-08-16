@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'secure_storage_service.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://10.0.2.2:8000/api';
+  static final String? baseUrl = dotenv.env['API_URL'];
 
   static Future<Map<String, String>> _buildHeaders() async {
     final token = await SecureStorageService.getToken();

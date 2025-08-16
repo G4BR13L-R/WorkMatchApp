@@ -173,4 +173,7 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# ENV
+*.env
+
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter
