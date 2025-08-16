@@ -115,7 +115,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
                   },
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
 
               SizedBox(
                 width: double.infinity,
@@ -145,7 +145,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     }
 
     SnackbarHelper.showSuccess(context, "Logout realizado com sucesso!");
-    Navigator.pushReplacementNamed(context, '/');
+    Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
 
     setState(() => _isLoading = false);
   }
