@@ -2,22 +2,13 @@ import 'package:work_match_app/data/models/cidade_model.dart';
 
 class EnderecoModel {
   final int? id;
-  final String logradouro;
-  final String numero;
-  final String complemento;
-  final String bairro;
-  final int cidadeId;
+  final String? logradouro;
+  final String? numero;
+  final String? complemento;
+  final String? bairro;
   final CidadeModel? cidade;
 
-  EnderecoModel({
-    this.id,
-    required this.logradouro,
-    required this.numero,
-    required this.complemento,
-    required this.bairro,
-    required this.cidadeId,
-    this.cidade,
-  });
+  EnderecoModel({this.id, this.logradouro, this.numero, this.complemento, this.bairro, this.cidade});
 
   factory EnderecoModel.fromJson(Map<String, dynamic> json) {
     return EnderecoModel(
@@ -26,8 +17,7 @@ class EnderecoModel {
       numero: json['numero'],
       complemento: json['complemento'],
       bairro: json['bairro'],
-      cidadeId: json['cidade_id'],
-      cidade: CidadeModel.fromJson(json['cidade'] ?? {}),
+      cidade: json['cidade'] != null ? CidadeModel.fromJson(json['cidade']) : null,
     );
   }
 
@@ -38,7 +28,6 @@ class EnderecoModel {
       'numero': numero,
       'complemento': complemento,
       'bairro': bairro,
-      'cidade_id': cidadeId,
       'cidade': cidade?.toJson(),
     };
 

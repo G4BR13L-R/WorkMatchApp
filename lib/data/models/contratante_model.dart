@@ -36,7 +36,7 @@ class ContratanteModel {
       email: json['email'],
       password: json['password'],
       passwordConfirmation: json['password_confirmation'],
-      endereco: EnderecoModel.fromJson(json['endereco'] ?? {}),
+      endereco: json['endereco'] != null ? EnderecoModel.fromJson(json['endereco']) : null,
     );
   }
 
