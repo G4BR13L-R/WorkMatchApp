@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/ui/controllers/contratante_profile_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -20,6 +22,8 @@ class _ContratanteRegisterState extends State<ContratanteRegister> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final ContratanteProfileController _contratanteProfileController = ContratanteProfileController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -92,12 +96,7 @@ class _ContratanteRegisterState extends State<ContratanteRegister> {
 
                 SizedBox(
                   width: double.infinity,
-                  child: CustomButton(
-                    text: "Cadastrar",
-                    onPressed: () {
-                      // ação de cadastro
-                    },
-                  ),
+                  child: CustomButton(text: "Cadastrar", onPressed: () => _isLoading ? null : _registerContratante()),
                 ),
               ],
             ),
@@ -105,5 +104,32 @@ class _ContratanteRegisterState extends State<ContratanteRegister> {
         ),
       ),
     );
+  }
+
+  Future<void> _registerContratante() async {
+    setState(() => _isLoading = true);
+
+    try {
+      await _contratanteProfileController.register(
+        _nomeController.text.trim(),
+        _telefoneController.text.trim(),
+        _cnpjController.text.trim(),
+        _razaoSocialController.text.trim(),
+        _nomeFantasiaController.text.trim(),
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        _confirmPasswordController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      SnackbarHelper.showSuccess(context, "Cadastro realizado com sucesso!");
+      Navigator.pushReplacementNamed(context, '/contratante/home');
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 }

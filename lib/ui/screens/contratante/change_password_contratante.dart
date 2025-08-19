@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/ui/controllers/contratante_profile_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -15,6 +17,8 @@ class _ChangePasswordContratanteState extends State<ChangePasswordContratante> {
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmNewPassword = TextEditingController();
+  final ContratanteProfileController contratanteProfileController = ContratanteProfileController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -65,17 +69,39 @@ class _ChangePasswordContratanteState extends State<ChangePasswordContratante> {
 
               SizedBox(
                 width: double.infinity,
-                child: CustomButton(
-                  text: "Atualizar Senha",
-                  onPressed: () {
-                    // ação atualizar senha
-                  },
-                ),
+                child: CustomButton(text: "Atualizar Senha", onPressed: () => _isLoading ? null : _updatePassword()),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _updatePassword() async {
+    setState(() => _isLoading = true);
+
+    try {
+      bool status = await contratanteProfileController.updatePassword(
+        _currentPassword.text.trim(),
+        _newPassword.text.trim(),
+        _confirmNewPassword.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      if (!status) {
+        SnackbarHelper.showError(context, "Falha ao atualizar senha!");
+        return;
+      }
+
+      SnackbarHelper.showSuccess(context, "Senha atualizada com sucesso!");
+      Navigator.pushNamed(context, '/contratante/profile');
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 }

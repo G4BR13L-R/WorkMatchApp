@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/data/models/contratante_model.dart';
 import 'package:work_match_app/ui/controllers/auth_controller.dart';
+import 'package:work_match_app/ui/controllers/contratante_profile_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -24,8 +26,18 @@ class _ProfileContratanteState extends State<ProfileContratante> {
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
+
   final AuthController authController = AuthController();
+  final ContratanteProfileController contratanteProfileController = ContratanteProfileController();
+
   bool _isLoading = false;
+  bool _isFetching = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
 
   @override
   void dispose() {
@@ -42,8 +54,34 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     super.dispose();
   }
 
+  Future<void> _loadProfile() async {
+    try {
+      ContratanteModel contratanteModel = await contratanteProfileController.show();
+
+      _nomeController.text = contratanteModel.nome ?? '';
+      _telefoneController.text = contratanteModel.telefone ?? '';
+      _emailController.text = contratanteModel.email ?? '';
+      _cnpjController.text = contratanteModel.cnpj ?? '';
+      _razaoSocialController.text = contratanteModel.razaoSocial ?? '';
+      _nomeFantasiaController.text = contratanteModel.nomeFantasia ?? '';
+      _logradouroController.text = contratanteModel.endereco?.logradouro ?? '';
+      _numeroController.text = contratanteModel.endereco?.numero ?? '';
+      _complementoController.text = contratanteModel.endereco?.complemento ?? '';
+      _bairroController.text = contratanteModel.endereco?.bairro ?? '';
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isFetching = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isFetching) {
+      return const Scaffold(backgroundColor: AppColors.background, body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -108,12 +146,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
               // const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
-                child: CustomButton(
-                  text: "Salvar Alterações",
-                  onPressed: () {
-                    // Ação salvar perfil
-                  },
-                ),
+                child: CustomButton(text: "Salvar Alterações", onPressed: () => _isLoading ? null : _updateProfile()),
               ),
               const SizedBox(height: 16),
 
@@ -132,6 +165,39 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     );
   }
 
+  Future<void> _updateProfile() async {
+    setState(() => _isLoading = true);
+
+    try {
+      bool status = await contratanteProfileController.update(
+        _nomeController.text.trim(),
+        _telefoneController.text.trim(),
+        _emailController.text.trim(),
+        _cnpjController.text.trim(),
+        _razaoSocialController.text.trim(),
+        _nomeFantasiaController.text.trim(),
+        _logradouroController.text.trim(),
+        _numeroController.text.trim(),
+        _complementoController.text.trim(),
+        _bairroController.text.trim(),
+        null,
+      );
+
+      if (!mounted) return;
+
+      if (status) {
+        SnackbarHelper.showSuccess(context, "Perfil atualizado com sucesso!");
+      } else {
+        SnackbarHelper.showError(context, "Falha ao atualizar perfil!");
+      }
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
   Future<void> _logout() async {
     setState(() => _isLoading = true);
 
@@ -140,7 +206,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     if (!mounted) return;
 
     if (!logout) {
-      SnackbarHelper.showSuccess(context, "Falha ao realizar logout!");
+      SnackbarHelper.showError(context, "Falha ao realizar logout!");
       return;
     }
 
