@@ -58,12 +58,12 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     try {
       ContratanteModel contratanteModel = await contratanteProfileController.show();
 
-      _nomeController.text = contratanteModel.nome ?? '';
-      _telefoneController.text = contratanteModel.telefone ?? '';
-      _emailController.text = contratanteModel.email ?? '';
-      _cnpjController.text = contratanteModel.cnpj ?? '';
-      _razaoSocialController.text = contratanteModel.razaoSocial ?? '';
-      _nomeFantasiaController.text = contratanteModel.nomeFantasia ?? '';
+      _nomeController.text = contratanteModel.nome;
+      _telefoneController.text = contratanteModel.telefone;
+      _emailController.text = contratanteModel.email;
+      _cnpjController.text = contratanteModel.cnpj;
+      _razaoSocialController.text = contratanteModel.razaoSocial;
+      _nomeFantasiaController.text = contratanteModel.nomeFantasia;
       _logradouroController.text = contratanteModel.endereco?.logradouro ?? '';
       _numeroController.text = contratanteModel.endereco?.numero ?? '';
       _complementoController.text = contratanteModel.endereco?.complemento ?? '';
