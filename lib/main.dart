@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:work_match_app/ui/screens/auth/login.dart';
 import 'package:work_match_app/ui/screens/auth/account_type.dart';
+import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/change_password_contratado.dart';
 import 'package:work_match_app/ui/screens/contratante/contratante_register.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
@@ -25,10 +29,18 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginScreen(),
         '/account_type': (context) => const AccountType(),
+
+        // Contratante
         '/contratante/register': (context) => const ContratanteRegister(),
         '/contratante/home': (context) => const HomeContratante(),
         '/contratante/profile': (context) => const ProfileContratante(),
         '/contratante/change_password': (context) => const ChangePasswordContratante(),
+
+        // Contratado
+        '/contratado/register': (context) => const RegisterContratado(),
+        '/contratado/home': (context) => const HomeContratado(),
+        '/contratado/profile': (context) => const ProfileContratado(),
+        '/contratado/change_password': (context) => const ChangePasswordContratado(),
       },
     );
   }

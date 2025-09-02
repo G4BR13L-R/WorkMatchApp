@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (userModel.tipo == 'contratante') {
         Navigator.pushReplacementNamed(context, '/contratante/home');
       } else {
-        // Navigator.pushReplacementNamed(context, '/contratado/home');
+        Navigator.pushReplacementNamed(context, '/contratado/home');
       }
     } catch (e) {
       if (!mounted) return;

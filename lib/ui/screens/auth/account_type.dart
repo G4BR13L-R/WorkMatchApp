@@ -33,9 +33,7 @@ class AccountType extends StatelessWidget {
                   width: double.infinity,
                   child: CustomButton(
                     text: "Contratado",
-                    onPressed: () {
-                      // Navigator.pushNamed(context, '/contratado/register');
-                    },
+                    onPressed: () => Navigator.pushNamed(context, '/contratado/register'),
                   ),
                 ),
               ],
