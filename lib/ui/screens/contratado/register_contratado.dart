@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
@@ -56,23 +57,44 @@ class _RegisterContratadoState extends State<RegisterContratado> {
                 const SizedBox(height: 16),
 
                 CustomTextField(
-                  hintText: "Telefone (somente números)",
+                  hintText: "Telefone",
                   icon: Icons.phone,
                   controller: _telefoneController,
+                  inputFormatters: [
+                    MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')}),
+                  ],
+                  keyboardType: TextInputType.phone,
                 ),
                 const SizedBox(height: 16),
 
                 CustomTextField(
                   hintText: "Data de Nascimento",
-                  icon: Icons.business,
+                  icon: Icons.calendar_month,
                   controller: _dataNascimentoController,
+                  inputFormatters: [
+                    MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
+                  ],
+                  keyboardType: TextInputType.datetime,
                 ),
                 const SizedBox(height: 16),
 
-                CustomTextField(hintText: "CPF", icon: Icons.account_balance, controller: _cpfController),
+                CustomTextField(
+                  hintText: "CPF",
+                  icon: Icons.person,
+                  controller: _cpfController,
+                  inputFormatters: [
+                    MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')}),
+                  ],
+                  keyboardType: TextInputType.number,
+                ),
                 const SizedBox(height: 16),
 
-                CustomTextField(hintText: "RG", icon: Icons.storefront, controller: _rgController),
+                CustomTextField(
+                  hintText: "RG",
+                  icon: Icons.badge,
+                  controller: _rgController,
+                  keyboardType: TextInputType.number,
+                ),
                 const SizedBox(height: 16),
 
                 CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),

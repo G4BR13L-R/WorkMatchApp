@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
@@ -29,6 +30,10 @@ class _ProfileContratadoState extends State<ProfileContratado> {
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
   CidadeModel? _cidadeSelecionada;
+
+  final _telefoneFormatter = MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')});
+  final _dataNascimentoFormatter = MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')});
+  final _cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   final AuthController _authController = AuthController();
   final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
@@ -62,11 +67,13 @@ class _ProfileContratadoState extends State<ProfileContratado> {
     try {
       ContratadoModel contratado = await _contratadoProfileController.show();
 
+      String dataNascimento = contratado.dataNascimento.split('-').reversed.join('/');
+
       _nomeController.text = contratado.nome;
-      _telefoneController.text = contratado.telefone;
+      _telefoneController.text = _telefoneFormatter.maskText(contratado.telefone);
       _emailController.text = contratado.email;
-      _dataNascimentoController.text = contratado.dataNascimento;
-      _cpfController.text = contratado.cpf;
+      _dataNascimentoController.text = _dataNascimentoFormatter.maskText(dataNascimento);
+      _cpfController.text = _cpfFormatter.maskText(contratado.cpf);
       _rgController.text = contratado.rg ?? '';
       _logradouroController.text = contratado.endereco?.logradouro ?? '';
       _numeroController.text = contratado.endereco?.numero ?? '';
@@ -113,7 +120,13 @@ class _ProfileContratadoState extends State<ProfileContratado> {
               CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Telefone", icon: Icons.phone, controller: _telefoneController),
+              CustomTextField(
+                hintText: "Telefone",
+                icon: Icons.phone,
+                controller: _telefoneController,
+                inputFormatters: [_telefoneFormatter],
+                keyboardType: TextInputType.phone,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
@@ -123,19 +136,37 @@ class _ProfileContratadoState extends State<ProfileContratado> {
                 hintText: "Data de Nascimento",
                 icon: Icons.business,
                 controller: _dataNascimentoController,
+                inputFormatters: [_dataNascimentoFormatter],
+                keyboardType: TextInputType.datetime,
               ),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "CPF", icon: Icons.account_balance, controller: _cpfController),
+              CustomTextField(
+                hintText: "CPF",
+                icon: Icons.account_balance,
+                controller: _cpfController,
+                inputFormatters: [_cpfFormatter],
+                keyboardType: TextInputType.number,
+              ),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "RG", icon: Icons.storefront, controller: _rgController),
+              CustomTextField(
+                hintText: "RG",
+                icon: Icons.storefront,
+                controller: _rgController,
+                keyboardType: TextInputType.number,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Número", icon: Icons.confirmation_number, controller: _numeroController),
+              CustomTextField(
+                hintText: "Número",
+                icon: Icons.confirmation_number,
+                controller: _numeroController,
+                keyboardType: TextInputType.number,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(

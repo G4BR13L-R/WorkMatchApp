@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
@@ -29,6 +30,9 @@ class _ProfileContratanteState extends State<ProfileContratante> {
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
   CidadeModel? _cidadeSelecionada;
+
+  final _telefoneFormatter = MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')});
+  final _cnpjFormatter = MaskTextInputFormatter(mask: '##.###.###/####-##', filter: {"#": RegExp(r'[0-9]')});
 
   final AuthController authController = AuthController();
   final ContratanteProfileController contratanteProfileController = ContratanteProfileController();
@@ -63,9 +67,9 @@ class _ProfileContratanteState extends State<ProfileContratante> {
       ContratanteModel contratanteModel = await contratanteProfileController.show();
 
       _nomeController.text = contratanteModel.nome;
-      _telefoneController.text = contratanteModel.telefone;
+      _telefoneController.text = _telefoneFormatter.maskText(contratanteModel.telefone);
       _emailController.text = contratanteModel.email;
-      _cnpjController.text = contratanteModel.cnpj;
+      _cnpjController.text = _cnpjFormatter.maskText(contratanteModel.cnpj);
       _razaoSocialController.text = contratanteModel.razaoSocial;
       _nomeFantasiaController.text = contratanteModel.nomeFantasia;
       _logradouroController.text = contratanteModel.endereco?.logradouro ?? '';
@@ -113,13 +117,25 @@ class _ProfileContratanteState extends State<ProfileContratante> {
               CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Telefone", icon: Icons.phone, controller: _telefoneController),
+              CustomTextField(
+                hintText: "Telefone",
+                icon: Icons.phone,
+                controller: _telefoneController,
+                inputFormatters: [_telefoneFormatter],
+                keyboardType: TextInputType.phone,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "CNPJ", icon: Icons.business, controller: _cnpjController),
+              CustomTextField(
+                hintText: "CNPJ",
+                icon: Icons.business,
+                controller: _cnpjController,
+                inputFormatters: [_cnpjFormatter],
+                keyboardType: TextInputType.number,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(
@@ -135,7 +151,12 @@ class _ProfileContratanteState extends State<ProfileContratante> {
               CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Número", icon: Icons.confirmation_number, controller: _numeroController),
+              CustomTextField(
+                hintText: "Número",
+                icon: Icons.confirmation_number,
+                controller: _numeroController,
+                keyboardType: TextInputType.phone,
+              ),
               const SizedBox(height: 16),
 
               CustomTextField(

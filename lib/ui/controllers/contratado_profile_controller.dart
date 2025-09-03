@@ -21,10 +21,13 @@ class ContratadoProfileController {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
     if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
+    if (dataNascimento.length < 10) throw Exception("o campo data de nascimento é inválido");
     if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
     if (password.isEmpty) throw Exception("o campo senha é obrigatório");
     if (passwordConfirmation.isEmpty) throw Exception("o campo confirmação de senha é obrigatório");
+
+    dataNascimento = dataNascimento.split('/').reversed.join('-');
 
     return await contratadoProfileRepository.store(
       nome,
@@ -54,8 +57,11 @@ class ContratadoProfileController {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
     if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
+    if (dataNascimento.length < 10) throw Exception("o campo data de nascimento é inválido");
     if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
+
+    dataNascimento = dataNascimento.split('/').reversed.join('-');
 
     return await contratadoProfileRepository.update(
       nome,
