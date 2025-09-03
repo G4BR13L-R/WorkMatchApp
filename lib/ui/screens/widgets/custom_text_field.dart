@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final IconData icon;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     required this.icon,
     required this.controller,
+    this.focusNode,
   });
 
   @override
@@ -20,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: obscureText,
+      focusNode: focusNode,
       style: const TextStyle(color: AppColors.textLight),
       decoration: InputDecoration(
         filled: true,
