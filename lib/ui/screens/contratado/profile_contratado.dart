@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/data/models/cidade_model.dart';
 import 'package:work_match_app/data/models/contratado_model.dart';
 import 'package:work_match_app/ui/controllers/auth_controller.dart';
 import 'package:work_match_app/ui/controllers/contratado_profile_controller.dart';
+import 'package:work_match_app/ui/screens/widgets/cidade_autocomplete.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
@@ -26,6 +28,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
+  CidadeModel? _cidadeSelecionada;
 
   final AuthController _authController = AuthController();
   final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
@@ -51,6 +54,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
     _numeroController.dispose();
     _complementoController.dispose();
     _bairroController.dispose();
+    _cidadeSelecionada = null;
     super.dispose();
   }
 
@@ -68,6 +72,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
       _numeroController.text = contratado.endereco?.numero ?? '';
       _complementoController.text = contratado.endereco?.complemento ?? '';
       _bairroController.text = contratado.endereco?.bairro ?? '';
+      _cidadeSelecionada = contratado.endereco?.cidade;
     } catch (e) {
       if (!mounted) return;
       SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
@@ -142,8 +147,14 @@ class _ProfileContratadoState extends State<ProfileContratado> {
               CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
               const SizedBox(height: 16),
 
-              // const CustomTextField(hintText: "Cidade ID", icon: Icons.location_city),
-              // const SizedBox(height: 24),
+              CidadeAutoComplete(
+                initialValue: _cidadeSelecionada,
+                onSelected: (cidade) {
+                  setState(() => _cidadeSelecionada = cidade);
+                },
+              ),
+              const SizedBox(height: 24),
+
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(text: "Salvar Alterações", onPressed: () => _isLoading ? null : _updateProfile()),
@@ -180,7 +191,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
         _numeroController.text.trim(),
         _complementoController.text.trim(),
         _bairroController.text.trim(),
-        null,
+        _cidadeSelecionada?.id,
       );
 
       if (!mounted) return;
