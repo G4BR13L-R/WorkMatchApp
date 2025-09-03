@@ -108,9 +108,24 @@ class ContratanteProfileRepository {
       'cidade_id': cidadeId,
     });
 
-    bool status = response.statusCode == 200 ? true : false;
+    if (response.statusCode == 200) return true;
 
-    return status;
+    Map<String, dynamic> errorData;
+
+    try {
+      errorData = jsonDecode(response.body);
+    } catch (e) {
+      throw Exception('Erro de comunicação com o servidor.');
+    }
+
+    if (errorData.containsKey('errors')) {
+      final firstKey = errorData['errors'].keys.first;
+      final firstError = errorData['errors'][firstKey][0];
+
+      throw Exception(firstError);
+    } else {
+      throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+    }
   }
 
   Future<bool> updatePassword(String currentPassword, String newPassword, String newPasswordConfirmation) async {
@@ -120,17 +135,49 @@ class ContratanteProfileRepository {
       'new_password_confirmation': newPasswordConfirmation,
     });
 
-    bool status = response.statusCode == 200 ? true : false;
+    if (response.statusCode == 200) return true;
 
-    return status;
+    Map<String, dynamic> errorData;
+
+    try {
+      errorData = jsonDecode(response.body);
+    } catch (e) {
+      throw Exception('Erro de comunicação com o servidor.');
+    }
+
+    if (errorData.containsKey('errors')) {
+      final firstKey = errorData['errors'].keys.first;
+      final firstError = errorData['errors'][firstKey][0];
+
+      throw Exception(firstError);
+    } else {
+      throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+    }
   }
 
   Future<bool> delete(currentPassword) async {
     final response = await ApiClient.delete('/contratante/perfil', body: {'current_password': currentPassword});
 
-    bool status = response.statusCode == 200 ? true : false;
-    if (status) await SecureStorageService.deleteToken();
+    if (response.statusCode == 200) {
+      await SecureStorageService.deleteToken();
+      return true;
+    }
 
-    return status;
+    Map<String, dynamic> errorData;
+
+    try {
+      errorData = jsonDecode(response.body);
+    } catch (e) {
+      throw Exception('Erro de comunicação com o servidor.');
+    }
+
+    if (errorData.containsKey('errors')) {
+      final firstKey = errorData['errors'].keys.first;
+      final firstError = errorData['errors'][firstKey][0];
+
+      throw Exception(firstError);
+    } else {
+      throw Exception(errorData['message'] ?? 'Ocorreu um erro desconhecido.');
+    }
   }
 }

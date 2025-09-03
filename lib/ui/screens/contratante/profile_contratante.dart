@@ -181,7 +181,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
     setState(() => _isLoading = true);
 
     try {
-      bool status = await contratanteProfileController.update(
+      await contratanteProfileController.update(
         _nomeController.text.trim(),
         _telefoneController.text.trim(),
         _emailController.text.trim(),
@@ -197,11 +197,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
 
       if (!mounted) return;
 
-      if (status) {
-        SnackbarHelper.showSuccess(context, "Perfil atualizado com sucesso!");
-      } else {
-        SnackbarHelper.showError(context, "Falha ao atualizar perfil!");
-      }
+      SnackbarHelper.showSuccess(context, "Perfil atualizado com sucesso!");
     } catch (e) {
       if (!mounted) return;
       SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));

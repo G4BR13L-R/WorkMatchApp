@@ -92,18 +92,13 @@ class _SecurityAccountContratanteState extends State<SecurityAccountContratante>
     setState(() => _isLoading = true);
 
     try {
-      bool status = await contratanteProfileController.updatePassword(
+      await contratanteProfileController.updatePassword(
         _currentPassword.text.trim(),
         _newPassword.text.trim(),
         _confirmNewPassword.text.trim(),
       );
 
       if (!mounted) return;
-
-      if (!status) {
-        SnackbarHelper.showError(context, "Falha ao atualizar senha!");
-        return;
-      }
 
       SnackbarHelper.showSuccess(context, "Senha atualizada com sucesso!");
       Navigator.pushNamed(context, '/contratante/profile');
@@ -119,14 +114,9 @@ class _SecurityAccountContratanteState extends State<SecurityAccountContratante>
     setState(() => _isLoading = true);
 
     try {
-      bool status = await contratanteProfileController.delete(_currentPassword.text.trim());
+      await contratanteProfileController.delete(_currentPassword.text.trim());
 
       if (!mounted) return;
-
-      if (!status) {
-        SnackbarHelper.showError(context, "Falha ao excluir a conta!");
-        return;
-      }
 
       SnackbarHelper.showSuccess(context, "Conta excluída com sucesso!");
       Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
