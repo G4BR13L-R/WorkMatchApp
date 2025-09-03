@@ -140,8 +140,8 @@ class ContratadoProfileRepository {
     return status;
   }
 
-  Future<bool> delete() async {
-    final response = await ApiClient.delete('/contratado/perfil');
+  Future<bool> delete(currentPassword) async {
+    final response = await ApiClient.delete('/contratado/perfil', body: {'current_password': currentPassword});
 
     bool status = response.statusCode == 200 ? true : false;
     if (status) await SecureStorageService.deleteToken();

@@ -80,7 +80,9 @@ class ContratanteProfileController {
     return await contratanteProfileRepository.updatePassword(currentPassword, newPassword, newPasswordConfirmation);
   }
 
-  Future<bool> delete() async {
-    return await contratanteProfileRepository.delete();
+  Future<bool> delete(currentPassword) async {
+    if (currentPassword.isEmpty) throw Exception("O campo senha atual é obrigatório");
+
+    return await contratanteProfileRepository.delete(currentPassword);
   }
 }

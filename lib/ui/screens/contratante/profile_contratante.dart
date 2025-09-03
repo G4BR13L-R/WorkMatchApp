@@ -103,7 +103,8 @@ class _ProfileContratanteState extends State<ProfileContratante> {
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
-                  text: "Alterar Senha",
+                  text: "Segurança da Conta",
+                  backgroundColor: AppColors.accent,
                   onPressed: () => Navigator.pushNamed(context, '/contratante/change_password'),
                 ),
               ),

@@ -35,7 +35,7 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
-        title: Text("Alterar Senha", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        title: Text("Segurança da Conta", style: AppTextStyles.title.copyWith(fontSize: 22)),
         iconTheme: const IconThemeData(color: AppColors.textLight),
       ),
       body: SafeArea(
@@ -71,6 +71,16 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
                 width: double.infinity,
                 child: CustomButton(text: "Atualizar Senha", onPressed: () => _isLoading ? null : _updatePassword()),
               ),
+              const SizedBox(height: 16),
+
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  text: "Excluir Conta",
+                  backgroundColor: AppColors.warning,
+                  onPressed: () => _isLoading ? null : _deleteAccount(),
+                ),
+              ),
             ],
           ),
         ),
@@ -97,6 +107,29 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
 
       SnackbarHelper.showSuccess(context, "Senha atualizada com sucesso!");
       Navigator.pushNamed(context, '/contratado/profile');
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _deleteAccount() async {
+    setState(() => _isLoading = true);
+
+    try {
+      bool status = await _contratadoProfileController.delete(_currentPassword.text.trim());
+
+      if (!mounted) return;
+
+      if (!status) {
+        SnackbarHelper.showError(context, "Falha ao excluir a conta!");
+        return;
+      }
+
+      SnackbarHelper.showSuccess(context, "Conta excluída com sucesso!");
+      Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
     } catch (e) {
       if (!mounted) return;
       SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));

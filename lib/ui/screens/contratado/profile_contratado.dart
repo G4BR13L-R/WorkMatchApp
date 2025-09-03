@@ -103,7 +103,8 @@ class _ProfileContratadoState extends State<ProfileContratado> {
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
-                  text: "Alterar Senha",
+                  text: "Segurança da Conta",
+                  backgroundColor: AppColors.accent,
                   onPressed: () => Navigator.pushNamed(context, '/contratado/change_password'),
                 ),
               ),

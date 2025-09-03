@@ -9,15 +9,15 @@ class ContratadoProfileController {
   }
 
   Future<ContratadoModel> register(
-      String nome,
-      String telefone,
-      String dataNascimento,
-      String cpf,
-      String rg,
-      String email,
-      String password,
-      String passwordConfirmation,
-      ) async {
+    String nome,
+    String telefone,
+    String dataNascimento,
+    String cpf,
+    String rg,
+    String email,
+    String password,
+    String passwordConfirmation,
+  ) async {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
     if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
@@ -39,18 +39,18 @@ class ContratadoProfileController {
   }
 
   Future<bool> update(
-      String nome,
-      String telefone,
-      String email,
-      String dataNascimento,
-      String cpf,
-      String rg,
-      String? logradouro,
-      String? numero,
-      String? complemento,
-      String? bairro,
-      int? cidadeId,
-      ) async {
+    String nome,
+    String telefone,
+    String email,
+    String dataNascimento,
+    String cpf,
+    String rg,
+    String? logradouro,
+    String? numero,
+    String? complemento,
+    String? bairro,
+    int? cidadeId,
+  ) async {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
     if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
@@ -80,7 +80,9 @@ class ContratadoProfileController {
     return await contratadoProfileRepository.updatePassword(currentPassword, newPassword, newPasswordConfirmation);
   }
 
-  Future<bool> delete() async {
-    return await contratadoProfileRepository.delete();
+  Future<bool> delete(currentPassword) async {
+    if (currentPassword.isEmpty) throw Exception("O campo senha atual é obrigatório");
+
+    return await contratadoProfileRepository.delete(currentPassword);
   }
 }
