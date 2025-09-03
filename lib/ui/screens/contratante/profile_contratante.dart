@@ -105,7 +105,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
                 child: CustomButton(
                   text: "Segurança da Conta",
                   backgroundColor: AppColors.accent,
-                  onPressed: () => Navigator.pushNamed(context, '/contratante/change_password'),
+                  onPressed: () => Navigator.pushNamed(context, '/contratante/security_account'),
                 ),
               ),
               const SizedBox(height: 24),

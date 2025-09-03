@@ -6,14 +6,14 @@ import 'package:work_match_app/ui/controllers/contratante_profile_controller.dar
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
-class ContratanteRegister extends StatefulWidget {
-  const ContratanteRegister({super.key});
+class RegisterContratante extends StatefulWidget {
+  const RegisterContratante({super.key});
 
   @override
-  State<ContratanteRegister> createState() => _ContratanteRegisterState();
+  State<RegisterContratante> createState() => _RegisterContratanteState();
 }
 
-class _ContratanteRegisterState extends State<ContratanteRegister> {
+class _RegisterContratanteState extends State<RegisterContratante> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _telefoneController = TextEditingController();
   final TextEditingController _cnpjController = TextEditingController();

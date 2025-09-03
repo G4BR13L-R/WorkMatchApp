@@ -5,11 +5,11 @@ import 'package:work_match_app/ui/screens/auth/account_type.dart';
 import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
-import 'package:work_match_app/ui/screens/contratado/change_password_contratado.dart';
-import 'package:work_match_app/ui/screens/contratante/contratante_register.dart';
+import 'package:work_match_app/ui/screens/contratado/security_account_contratado.dart';
+import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
-import 'package:work_match_app/ui/screens/contratante/change_password_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/security_account_contratante.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -31,16 +31,16 @@ class MyApp extends StatelessWidget {
         '/account_type': (context) => const AccountType(),
 
         // Contratante
-        '/contratante/register': (context) => const ContratanteRegister(),
+        '/contratante/register': (context) => const RegisterContratante(),
         '/contratante/home': (context) => const HomeContratante(),
         '/contratante/profile': (context) => const ProfileContratante(),
-        '/contratante/change_password': (context) => const ChangePasswordContratante(),
+        '/contratante/security_account': (context) => const SecurityAccountContratante(),
 
         // Contratado
         '/contratado/register': (context) => const RegisterContratado(),
         '/contratado/home': (context) => const HomeContratado(),
         '/contratado/profile': (context) => const ProfileContratado(),
-        '/contratado/change_password': (context) => const ChangePasswordContratado(),
+        '/contratado/security_account': (context) => const SecurityAccountContratado(),
       },
     );
   }

@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/ui/controllers/contratado_profile_controller.dart';
+import 'package:work_match_app/ui/controllers/contratante_profile_controller.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 
-class ChangePasswordContratado extends StatefulWidget {
-  const ChangePasswordContratado({super.key});
+class SecurityAccountContratante extends StatefulWidget {
+  const SecurityAccountContratante({super.key});
 
   @override
-  State<ChangePasswordContratado> createState() => _ChangePasswordContratadoState();
+  State<SecurityAccountContratante> createState() => _SecurityAccountContratanteState();
 }
 
-class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
+class _SecurityAccountContratanteState extends State<SecurityAccountContratante> {
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmNewPassword = TextEditingController();
-  final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
+  final ContratanteProfileController contratanteProfileController = ContratanteProfileController();
   bool _isLoading = false;
 
   @override
@@ -92,7 +92,7 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
     setState(() => _isLoading = true);
 
     try {
-      bool status = await _contratadoProfileController.updatePassword(
+      bool status = await contratanteProfileController.updatePassword(
         _currentPassword.text.trim(),
         _newPassword.text.trim(),
         _confirmNewPassword.text.trim(),
@@ -106,7 +106,7 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
       }
 
       SnackbarHelper.showSuccess(context, "Senha atualizada com sucesso!");
-      Navigator.pushNamed(context, '/contratado/profile');
+      Navigator.pushNamed(context, '/contratante/profile');
     } catch (e) {
       if (!mounted) return;
       SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
@@ -119,7 +119,7 @@ class _ChangePasswordContratadoState extends State<ChangePasswordContratado> {
     setState(() => _isLoading = true);
 
     try {
-      bool status = await _contratadoProfileController.delete(_currentPassword.text.trim());
+      bool status = await contratanteProfileController.delete(_currentPassword.text.trim());
 
       if (!mounted) return;
 
