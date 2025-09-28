@@ -7,7 +7,8 @@ class ApiClient {
   static final String? baseUrl = dotenv.env['API_URL'];
 
   static Future<Map<String, String>> _buildHeaders() async {
-    final token = await SecureStorageService.getToken();
+    final authData = await SecureStorageService.getAuthData();
+    final token = authData['token'];
 
     return {
       'Accept': 'application/json',

@@ -59,7 +59,7 @@ class ContratadoProfileRepository {
         throw Exception('Token de autenticação não encontrado.');
       }
 
-      await SecureStorageService.saveToken(token);
+      await SecureStorageService.saveAuthData(token, 'contratado');
       return ContratadoModel.fromJson(data['contratado']);
     }
 
@@ -159,7 +159,7 @@ class ContratadoProfileRepository {
     final response = await ApiClient.delete('/contratado/perfil', body: {'current_password': currentPassword});
 
     if (response.statusCode == 200) {
-      await SecureStorageService.deleteToken();
+      await SecureStorageService.deleteAuthData();
       return true;
     }
 

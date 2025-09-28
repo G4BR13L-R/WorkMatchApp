@@ -10,12 +10,15 @@ class AuthRepository {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final token = data['token'];
+      final userType = data['user']['tipo'];
 
       if (token == null) {
         throw Exception('Token de autenticação não encontrado.');
+      } else if (userType == null) {
+        throw Exception('Tipo de usuário não encontrado.');
       }
 
-      await SecureStorageService.saveToken(token);
+      await SecureStorageService.saveAuthData(token, userType);
       return UserModel.fromJson(data['user']);
     }
 
@@ -41,7 +44,7 @@ class AuthRepository {
     final response = await ApiClient.delete('/sessions');
 
     bool status = response.statusCode == 200 ? true : false;
-    if (status) await SecureStorageService.deleteToken();
+    if (status) await SecureStorageService.deleteAuthData();
 
     return status;
   }

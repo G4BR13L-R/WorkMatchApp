@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:work_match_app/core/services/secure_storage_service.dart';
 import 'package:work_match_app/ui/screens/auth/login.dart';
 import 'package:work_match_app/ui/screens/auth/account_type.dart';
 import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
@@ -13,11 +14,14 @@ import 'package:work_match_app/ui/screens/contratante/security_account_contratan
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+  final authData = await SecureStorageService.getAuthData();
+  runApp(MyApp(userType: authData['type'] ?? ''));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? userType;
+
+  const MyApp({super.key, this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Work Match',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.amber, fontFamily: 'Roboto'),
-      initialRoute: '/',
+      initialRoute: (userType == null || userType!.isEmpty) ? '/' : '/$userType/home',
       routes: {
         '/': (context) => const LoginScreen(),
         '/account_type': (context) => const AccountType(),
