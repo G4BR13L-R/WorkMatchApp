@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
-import 'package:work_match_app/data/models/contratado_model.dart';
+import 'package:work_match_app/core/models/contratado_model.dart';
 
 class ContratadoProfileService {
   Future<ContratadoModel> show() async {

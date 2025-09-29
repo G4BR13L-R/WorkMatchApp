@@ -1,4 +1,4 @@
-import 'package:work_match_app/data/models/user_model.dart';
+import 'package:work_match_app/core/models/user_model.dart';
 import 'package:work_match_app/core/services/auth_service.dart';
 
 class AuthController {

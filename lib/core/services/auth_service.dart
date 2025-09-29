@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
-import 'package:work_match_app/data/models/user_model.dart';
+import 'package:work_match_app/core/models/user_model.dart';
 
 class AuthService {
   Future<UserModel> login(String email, String password) async {

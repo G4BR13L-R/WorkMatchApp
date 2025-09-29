@@ -1,4 +1,4 @@
-import 'package:work_match_app/data/models/cidade_model.dart';
+import 'package:work_match_app/core/models/cidade_model.dart';
 
 class EnderecoModel {
   final int? id;

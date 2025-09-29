@@ -1,38 +1,38 @@
-import 'package:work_match_app/data/models/endereco_model.dart';
+import 'package:work_match_app/core/models/endereco_model.dart';
 
-class ContratanteModel {
+class ContratadoModel {
   final int? id;
   final String nome;
   final String telefone;
-  final String cnpj;
-  final String razaoSocial;
-  final String nomeFantasia;
+  final String dataNascimento;
+  final String cpf;
+  final String? rg;
   final String email;
   final String? password;
   final String? passwordConfirmation;
   final EnderecoModel? endereco;
 
-  ContratanteModel({
+  ContratadoModel({
     this.id,
     required this.nome,
     required this.telefone,
-    required this.cnpj,
-    required this.razaoSocial,
-    required this.nomeFantasia,
+    required this.dataNascimento,
+    required this.cpf,
+    this.rg,
     required this.email,
     this.password,
     this.passwordConfirmation,
     this.endereco,
   });
 
-  factory ContratanteModel.fromJson(Map<String, dynamic> json) {
-    return ContratanteModel(
+  factory ContratadoModel.fromJson(Map<String, dynamic> json) {
+    return ContratadoModel(
       id: json['id'],
       nome: json['nome'],
       telefone: json['telefone'],
-      cnpj: json['cnpj'],
-      razaoSocial: json['razao_social'],
-      nomeFantasia: json['nome_fantasia'],
+      dataNascimento: json['data_nascimento'],
+      cpf: json['cpf'],
+      rg: json['rg'],
       email: json['email'],
       password: json['password'],
       passwordConfirmation: json['password_confirmation'],
@@ -45,9 +45,9 @@ class ContratanteModel {
       'id': id,
       'nome': nome,
       'telefone': telefone,
-      'cnpj': cnpj,
-      'razao_social': razaoSocial,
-      'nome_fantasia': nomeFantasia,
+      'data_nascimento': dataNascimento,
+      'cpf': cpf,
+      'rg': rg,
       'email': email,
     };
 

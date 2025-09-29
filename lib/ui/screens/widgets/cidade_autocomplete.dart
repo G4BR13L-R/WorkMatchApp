@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:work_match_app/data/models/cidade_model.dart';
+import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
 

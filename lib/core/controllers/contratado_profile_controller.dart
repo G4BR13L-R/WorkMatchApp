@@ -1,4 +1,4 @@
-import 'package:work_match_app/data/models/contratado_model.dart';
+import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/services/contratado_profile_service.dart';
 
 class ContratadoProfileController {

@@ -1,4 +1,4 @@
-import 'package:work_match_app/data/models/estado_model.dart';
+import 'package:work_match_app/core/models/estado_model.dart';
 
 class CidadeModel {
   final int? id;
