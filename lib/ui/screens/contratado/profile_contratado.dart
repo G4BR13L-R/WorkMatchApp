@@ -7,9 +7,9 @@ import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/controllers/auth_controller.dart';
 import 'package:work_match_app/core/controllers/contratado_profile_controller.dart';
-import 'package:work_match_app/ui/screens/widgets/cidade_autocomplete.dart';
-import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
-import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
+import 'package:work_match_app/ui/widgets/cidade_autocomplete.dart';
+import 'package:work_match_app/ui/widgets/custom_button.dart';
+import 'package:work_match_app/ui/widgets/custom_text_field.dart';
 
 class ProfileContratado extends StatefulWidget {
   const ProfileContratado({super.key});

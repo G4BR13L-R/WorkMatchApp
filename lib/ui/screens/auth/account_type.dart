@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
-import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
+import 'package:work_match_app/ui/widgets/custom_button.dart';
 
 class AccountType extends StatelessWidget {
   const AccountType({super.key});

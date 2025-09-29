@@ -3,8 +3,8 @@ import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/core/controllers/contratante_profile_controller.dart';
-import 'package:work_match_app/ui/screens/widgets/custom_button.dart';
-import 'package:work_match_app/ui/screens/widgets/custom_text_field.dart';
+import 'package:work_match_app/ui/widgets/custom_button.dart';
+import 'package:work_match_app/ui/widgets/custom_text_field.dart';
 
 class SecurityAccountContratante extends StatefulWidget {
   const SecurityAccountContratante({super.key});
