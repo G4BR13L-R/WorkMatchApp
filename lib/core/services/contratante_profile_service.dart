@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
-import 'package:work_match_app/data/models/contratado_model.dart';
+import 'package:work_match_app/data/models/contratante_model.dart';
 
-class ContratadoProfileRepository {
-  Future<ContratadoModel> show() async {
-    final response = await ApiClient.get('/contratado/perfil');
+class ContratanteProfileService {
+  Future<ContratanteModel> show() async {
+    final response = await ApiClient.get('/contratante/perfil');
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return ContratadoModel.fromJson(data);
+      return ContratanteModel.fromJson(data);
     }
 
     Map<String, dynamic> errorData;
@@ -30,22 +30,22 @@ class ContratadoProfileRepository {
     }
   }
 
-  Future<ContratadoModel> store(
+  Future<ContratanteModel> store(
     String nome,
     String telefone,
-    String dataNascimento,
-    String cpf,
-    String? rg,
+    String cnpj,
+    String razaoSocial,
+    String nomeFantasia,
     String email,
     String password,
     String passwordConfirmation,
   ) async {
-    final response = await ApiClient.post('/contratado/perfil', {
+    final response = await ApiClient.post('/contratante/perfil', {
       'nome': nome,
       'telefone': telefone,
-      'data_nascimento': dataNascimento,
-      'cpf': cpf,
-      'rg': rg,
+      'cnpj': cnpj,
+      'razao_social': razaoSocial,
+      'nome_fantasia': nomeFantasia,
       'email': email,
       'password': password,
       'password_confirmation': passwordConfirmation,
@@ -59,8 +59,8 @@ class ContratadoProfileRepository {
         throw Exception('Token de autenticação não encontrado.');
       }
 
-      await SecureStorageService.saveAuthData(token, 'contratado');
-      return ContratadoModel.fromJson(data['contratado']);
+      await SecureStorageService.saveAuthData(token, 'contratante');
+      return ContratanteModel.fromJson(data['contratante']);
     }
 
     Map<String, dynamic> errorData;
@@ -85,22 +85,22 @@ class ContratadoProfileRepository {
     String nome,
     String telefone,
     String email,
-    String dataNascimento,
-    String cpf,
-    String? rg,
+    String cnpj,
+    String razaoSocial,
+    String nomeFantasia,
     String? logradouro,
     String? numero,
     String? complemento,
     String? bairro,
     int? cidadeId,
   ) async {
-    final response = await ApiClient.put('/contratado/perfil', {
+    final response = await ApiClient.put('/contratante/perfil', {
       'nome': nome,
       'telefone': telefone,
       'email': email,
-      'data_nascimento': dataNascimento,
-      'cpf': cpf,
-      'rg': rg,
+      'cnpj': cnpj,
+      'razao_social': razaoSocial,
+      'nome_fantasia': nomeFantasia,
       'logradouro': logradouro,
       'numero': numero,
       'complemento': complemento,
@@ -129,7 +129,7 @@ class ContratadoProfileRepository {
   }
 
   Future<bool> updatePassword(String currentPassword, String newPassword, String newPasswordConfirmation) async {
-    final response = await ApiClient.put('/contratado/perfil/senha', {
+    final response = await ApiClient.put('/contratante/perfil/senha', {
       'current_password': currentPassword,
       'new_password': newPassword,
       'new_password_confirmation': newPasswordConfirmation,
@@ -156,7 +156,7 @@ class ContratadoProfileRepository {
   }
 
   Future<bool> delete(currentPassword) async {
-    final response = await ApiClient.delete('/contratado/perfil', body: {'current_password': currentPassword});
+    final response = await ApiClient.delete('/contratante/perfil', body: {'current_password': currentPassword});
 
     if (response.statusCode == 200) {
       await SecureStorageService.deleteAuthData();

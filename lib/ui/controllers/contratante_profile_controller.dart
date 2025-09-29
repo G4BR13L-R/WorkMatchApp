@@ -1,8 +1,8 @@
 import 'package:work_match_app/data/models/contratante_model.dart';
-import 'package:work_match_app/data/repositories/contratante_profile_repository.dart';
+import 'package:work_match_app/core/services/contratante_profile_service.dart';
 
 class ContratanteProfileController {
-  final ContratanteProfileRepository contratanteProfileRepository = ContratanteProfileRepository();
+  final ContratanteProfileService contratanteProfileRepository = ContratanteProfileService();
 
   Future<ContratanteModel> show() async {
     return await contratanteProfileRepository.show();

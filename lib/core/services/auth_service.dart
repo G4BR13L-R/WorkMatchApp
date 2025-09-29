@@ -3,7 +3,7 @@ import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
 import 'package:work_match_app/data/models/user_model.dart';
 
-class AuthRepository {
+class AuthService {
   Future<UserModel> login(String email, String password) async {
     final response = await ApiClient.post('/sessions', {'email': email, 'password': password});
 
