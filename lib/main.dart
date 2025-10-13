@@ -7,6 +7,7 @@ import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/security_account_contratado.dart';
+import 'package:work_match_app/ui/screens/contratante/oferta_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/contratante/home': (context) => const HomeContratante(),
         '/contratante/profile': (context) => const ProfileContratante(),
         '/contratante/security_account': (context) => const SecurityAccountContratante(),
+        '/contratante/oferta': (context) => const OfertaContratante(),
 
         // Contratado
         '/contratado/register': (context) => const RegisterContratado(),
