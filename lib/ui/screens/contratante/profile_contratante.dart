@@ -153,7 +153,7 @@ class _ProfileContratanteState extends State<ProfileContratante> {
 
               CustomTextField(
                 hintText: "Número",
-                icon: Icons.confirmation_number,
+                icon: Icons.numbers,
                 controller: _numeroController,
                 keyboardType: TextInputType.phone,
               ),
