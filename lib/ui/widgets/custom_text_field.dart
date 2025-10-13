@@ -10,6 +10,8 @@ class CustomTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
+  final int? minLine;
+  final int? maxLine;
 
   const CustomTextField({
     super.key,
@@ -20,6 +22,8 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.inputFormatters,
     this.keyboardType,
+    this.minLine,
+    this.maxLine,
   });
 
   @override
@@ -30,6 +34,8 @@ class CustomTextField extends StatelessWidget {
       focusNode: focusNode,
       inputFormatters: inputFormatters,
       keyboardType: keyboardType,
+      minLines: minLine,
+      maxLines: maxLine,
       style: const TextStyle(color: AppColors.textLight),
       decoration: InputDecoration(
         filled: true,
