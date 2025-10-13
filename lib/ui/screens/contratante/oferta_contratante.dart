@@ -57,86 +57,123 @@ class _OfertaContratanteState extends State<OfertaContratante> {
         iconTheme: const IconThemeData(color: AppColors.textLight),
       ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CustomTextField(hintText: "Titulo", icon: Icons.text_fields, controller: _tituloController),
-                const SizedBox(height: 16),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              CustomTextField(hintText: "Titulo", icon: Icons.text_fields, controller: _tituloController),
+              const SizedBox(height: 16),
 
-                CustomTextField(hintText: "Descricao", icon: Icons.text_fields, controller: _descricaoController),
-                const SizedBox(height: 16),
+              CustomTextField(
+                hintText: "Salario",
+                icon: Icons.attach_money,
+                controller: _salarioController,
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
 
-                CustomTextField(
-                  hintText: "Salario",
-                  icon: Icons.attach_money,
-                  controller: _salarioController,
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Data de Inicio",
-                  icon: Icons.date_range,
-                  controller: _dataInicioController,
-                  keyboardType: TextInputType.datetime,
-                  inputFormatters: [
-                    MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Data de Fim",
-                  icon: Icons.date_range,
-                  controller: _dataFimController,
-                  keyboardType: TextInputType.datetime,
-                  inputFormatters: [
-                    MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: 'Número',
-                  icon: Icons.numbers,
-                  controller: _numeroController,
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Complemento",
-                  icon: Icons.add_location_alt,
-                  controller: _complementoController,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
-                const SizedBox(height: 16),
-
-                CidadeAutoComplete(
-                  initialValue: _cidadeSelecionada,
-                  onSelected: (cidade) {
-                    setState(() => _cidadeSelecionada = cidade);
-                  },
-                ),
-                const SizedBox(height: 24),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(
-                    text: "Cadastrar Oferta",
-                    onPressed: () => _isLoading ? null : _gravarOfertaContratante(),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      hintText: "Data de Inicio",
+                      icon: Icons.date_range,
+                      controller: _dataInicioController,
+                      keyboardType: TextInputType.datetime,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
+                      ],
+                    ),
                   ),
+
+                  SizedBox(width: 5),
+
+                  Expanded(
+                    child: CustomTextField(
+                      hintText: "Data de Fim",
+                      icon: Icons.date_range,
+                      controller: _dataFimController,
+                      keyboardType: TextInputType.datetime,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+
+              Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: CustomTextField(
+                      hintText: "Logradouro",
+                      icon: Icons.location_on,
+                      controller: _logradouroController,
+                    ),
+                  ),
+
+                  SizedBox(width: 5),
+
+                  Expanded(
+                    flex: 3,
+                    child: CustomTextField(
+                      hintText: 'Número',
+                      icon: Icons.numbers,
+                      controller: _numeroController,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
+                  ),
+
+                  SizedBox(width: 5),
+
+                  Expanded(
+                    child: CustomTextField(
+                      hintText: "Complemento",
+                      icon: Icons.add_location_alt,
+                      controller: _complementoController,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              CidadeAutoComplete(
+                initialValue: _cidadeSelecionada,
+                onSelected: (cidade) {
+                  setState(() => _cidadeSelecionada = cidade);
+                },
+              ),
+              const SizedBox(height: 40),
+
+              CustomTextField(
+                hintText: "Descricao",
+                icon: Icons.text_fields,
+                controller: _descricaoController,
+                keyboardType: TextInputType.multiline,
+                minLine: 8,
+                maxLine: null,
+              ),
+              const SizedBox(height: 24),
+
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  text: "Cadastrar Oferta",
+                  onPressed: () => _isLoading ? null : _gravarOfertaContratante(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
