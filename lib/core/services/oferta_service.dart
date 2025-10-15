@@ -4,6 +4,16 @@ import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/utils/throw_exception.dart';
 
 class OfertaService {
+  Future<List<OfertaModel>> index() async {
+    final response = await ApiClient.get('/contratante/ofertas');
+
+    if (response.statusCode != 200) ThrowException.request(response.body);
+
+    final data = jsonDecode(response.body);
+
+    return data.map<OfertaModel>((item) => OfertaModel.fromJson(item)).toList();
+  }
+
   Future<OfertaModel> store(
     String titulo,
     String descricao,

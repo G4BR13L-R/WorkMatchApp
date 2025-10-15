@@ -4,6 +4,10 @@ import 'package:work_match_app/core/services/oferta_service.dart';
 class ContratanteOfertaController {
   final OfertaService ofertaRepository = OfertaService();
 
+  Future<List<OfertaModel>> index() {
+    return ofertaRepository.index();
+  }
+
   Future<OfertaModel> register(
     String titulo,
     String descricao,
