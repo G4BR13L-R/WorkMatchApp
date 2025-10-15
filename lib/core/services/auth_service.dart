@@ -43,7 +43,9 @@ class AuthService {
   Future<bool> logout() async {
     final response = await ApiClient.delete('/sessions');
 
-    bool status = response.statusCode == 200 ? true : false;
+    List<int> validStatusCodes = [200, 401];
+
+    bool status = validStatusCodes.contains(response.statusCode);
     if (status) await SecureStorageService.deleteAuthData();
 
     return status;
