@@ -22,8 +22,8 @@ class CustomTextField extends StatelessWidget {
     this.focusNode,
     this.inputFormatters,
     this.keyboardType,
-    this.minLine,
-    this.maxLine,
+    this.minLine = 1,
+    this.maxLine = 1,
   });
 
   @override
