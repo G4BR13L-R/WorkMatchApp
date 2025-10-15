@@ -24,7 +24,7 @@ class OfertaModel {
       id: json['id'],
       titulo: json['titulo'],
       descricao: json['descricao'],
-      salario: json['salario'],
+      salario: double.parse(json['salario'].toString()),
       dataInicio: json['data_inicio'],
       dataFim: json['data_fim'],
       endereco: EnderecoModel.fromJson(json['endereco']),
