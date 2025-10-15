@@ -103,19 +103,11 @@ class _OfertaContratanteState extends State<OfertaContratante> {
               ),
               const SizedBox(height: 40),
 
+              CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
+              const SizedBox(height: 16),
+
               Row(
                 children: [
-                  Expanded(
-                    flex: 5,
-                    child: CustomTextField(
-                      hintText: "Logradouro",
-                      icon: Icons.location_on,
-                      controller: _logradouroController,
-                    ),
-                  ),
-
-                  SizedBox(width: 5),
-
                   Expanded(
                     flex: 3,
                     child: CustomTextField(
@@ -125,11 +117,15 @@ class _OfertaContratanteState extends State<OfertaContratante> {
                       keyboardType: TextInputType.number,
                     ),
                   ),
+
+                  SizedBox(width: 5),
+
+                  Expanded(
+                    flex: 4,
+                    child: CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
+                  ),
                 ],
               ),
-              const SizedBox(height: 16),
-
-              CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
               const SizedBox(height: 16),
 
               CustomTextField(
