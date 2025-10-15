@@ -1,18 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
+import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/ui/widgets/oferta_card.dart';
 
-class HomeContratante extends StatelessWidget {
+class HomeContratante extends StatefulWidget {
   const HomeContratante({super.key});
 
-  final List<Map<String, String>> ofertas = const [
-    {"titulo": "Serviço de Limpeza", "descricao": "Limpeza residencial completa, rápida e eficiente."},
-    {"titulo": "Reforma Elétrica", "descricao": "Instalação e manutenção de circuitos elétricos."},
-  ];
+  @override
+  State<HomeContratante> createState() => _HomeContratanteState();
+}
+
+class _HomeContratanteState extends State<HomeContratante> {
+  final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
+
+  List<OfertaModel> _ofertas = [];
+  bool _isLoading = false;
+  bool _isFetching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadOfertas();
+  }
+
+  Future<void> _loadOfertas() async {
+    setState(() => _isFetching = true);
+
+    try {
+      final ofertas = await _contratanteOfertaController.index();
+
+      if (mounted) setState(() => _ofertas = ofertas);
+    } catch (e) {
+      if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      if (mounted) setState(() => _isFetching = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isFetching) {
+      return const Scaffold(backgroundColor: AppColors.background, body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       floatingActionButton: FloatingActionButton(
@@ -40,25 +73,26 @@ class HomeContratante extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              if (ofertas.isEmpty)
+              if (_ofertas.isEmpty)
                 Expanded(child: Center(child: Text("Nenhuma oferta cadastrada", style: AppTextStyles.subtitle)))
               else
                 Expanded(
                   child: ListView.builder(
-                    itemCount: ofertas.length,
+                    itemCount: _ofertas.length,
                     itemBuilder: (context, index) {
-                      final oferta = ofertas[index];
+                      final oferta = _ofertas[index];
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: OfertaCard(
-                          titulo: oferta["titulo"]!,
-                          descricao: oferta["descricao"]!,
+                          titulo: oferta.titulo,
+                          descricao: oferta.descricao,
                           onEditar: () {
                             // Ação editar
                           },
                           onExcluir: () {
-                            // Ação excluir
+                            if (_isLoading || oferta.id == null) return;
+                            _excluirOferta(oferta.id!);
                           },
                         ),
                       );
@@ -70,5 +104,22 @@ class HomeContratante extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _excluirOferta(int id) async {
+    setState(() => _isLoading = true);
+
+    try {
+      await _contratanteOfertaController.destroy(id);
+
+      if (!mounted) return;
+
+      SnackbarHelper.showSuccess(context, "Oferta excluída com sucesso!");
+      _loadOfertas();
+    } catch (e) {
+      if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 }
