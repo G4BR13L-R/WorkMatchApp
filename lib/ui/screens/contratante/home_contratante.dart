@@ -4,6 +4,8 @@ import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
+import 'package:work_match_app/ui/widgets/custom_button.dart';
+import 'package:work_match_app/ui/widgets/custom_dialog.dart';
 import 'package:work_match_app/ui/widgets/oferta_card.dart';
 
 class HomeContratante extends StatefulWidget {
@@ -86,7 +88,9 @@ class _HomeContratanteState extends State<HomeContratante> {
                         padding: const EdgeInsets.only(bottom: 16),
                         child: OfertaCard(
                           titulo: oferta.titulo,
-                          descricao: oferta.descricao,
+                          salario: oferta.salario,
+                          dataInicio: oferta.dataInicio,
+                          dataFim: oferta.dataFim,
                           onEditar: () {
                             // Ação editar
                           },
@@ -110,6 +114,15 @@ class _HomeContratanteState extends State<HomeContratante> {
     setState(() => _isLoading = true);
 
     try {
+      final status = await CustomDialog(
+        context,
+        'Confirmar Exclusão',
+        'Deseja realmente excluir esta oferta?',
+        type: 'delete',
+      );
+
+      if (!mounted || !status) return;
+
       await _contratanteOfertaController.destroy(id);
 
       if (!mounted) return;
