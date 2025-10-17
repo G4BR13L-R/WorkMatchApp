@@ -1,5 +1,6 @@
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/services/oferta_service.dart';
+import 'package:work_match_app/core/utils/format_helper.dart';
 
 class ContratanteOfertaController {
   final OfertaService ofertaRepository = OfertaService();
@@ -34,8 +35,8 @@ class ContratanteOfertaController {
     if (numero.isEmpty) throw Exception("o campo número é obrigatório");
     if (bairro.isEmpty) throw Exception("o campo bairro é obrigatório");
 
-    dataInicio = dataInicio.split('/').reversed.join('-');
-    dataFim = dataFim.split('/').reversed.join('-');
+    dataInicio = FormatHelper.formatDateToAPI(dataInicio);
+    dataFim = FormatHelper.formatDateToAPI(dataFim);
 
     return ofertaRepository.store(
       titulo,
@@ -74,8 +75,8 @@ class ContratanteOfertaController {
     if (numero.isEmpty) throw Exception("o campo número é obrigatório");
     if (bairro.isEmpty) throw Exception("o campo bairro é obrigatório");
 
-    dataInicio = dataInicio.split('/').reversed.join('-');
-    dataFim = dataFim.split('/').reversed.join('-');
+    dataInicio = FormatHelper.formatDateToAPI(dataInicio);
+    dataFim = FormatHelper.formatDateToAPI(dataFim);
 
     return ofertaRepository.update(
       id,

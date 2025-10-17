@@ -5,6 +5,7 @@ import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/format_helper.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/ui/widgets/cidade_autocomplete.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
@@ -69,8 +70,8 @@ class _OfertaContratanteState extends State<OfertaContratante> {
     try {
       OfertaModel oferta = await _contratanteOfertaController.show(id);
 
-      String dataInicio = oferta.dataInicio.split('-').reversed.join('/');
-      String dataFim = oferta.dataFim.split('-').reversed.join('/');
+      String dataInicio = FormatHelper.formatDateToBR(oferta.dataInicio);
+      String dataFim = FormatHelper.formatDateToBR(oferta.dataFim);
 
       _tituloController.text = oferta.titulo;
       _salarioController.text = oferta.salario.toStringAsFixed(2);

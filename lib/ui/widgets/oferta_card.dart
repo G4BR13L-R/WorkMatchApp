@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/format_helper.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 
 class OfertaCard extends StatelessWidget {
@@ -23,8 +24,8 @@ class OfertaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dataInicio = this.dataInicio.split('-').reversed.join('/');
-    String dataFim = this.dataFim.split('-').reversed.join('/');
+    String dataInicio = FormatHelper.formatDateToBR(this.dataInicio);
+    String dataFim = FormatHelper.formatDateToBR(this.dataFim);
 
     return Container(
       decoration: BoxDecoration(

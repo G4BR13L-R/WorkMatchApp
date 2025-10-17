@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
+import 'package:work_match_app/core/utils/format_helper.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/models/contratado_model.dart';
@@ -67,7 +68,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
     try {
       ContratadoModel contratado = await _contratadoProfileController.show();
 
-      String dataNascimento = contratado.dataNascimento.split('-').reversed.join('/');
+      String dataNascimento = FormatHelper.formatDateToBR(contratado.dataNascimento);
 
       _nomeController.text = contratado.nome;
       _telefoneController.text = _telefoneFormatter.maskText(contratado.telefone);

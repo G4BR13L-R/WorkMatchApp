@@ -1,5 +1,6 @@
 import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/services/contratado_profile_service.dart';
+import 'package:work_match_app/core/utils/format_helper.dart';
 
 class ContratadoProfileController {
   final ContratadoProfileService contratadoProfileRepository = ContratadoProfileService();
@@ -27,7 +28,7 @@ class ContratadoProfileController {
     if (password.isEmpty) throw Exception("o campo senha é obrigatório");
     if (passwordConfirmation.isEmpty) throw Exception("o campo confirmação de senha é obrigatório");
 
-    dataNascimento = dataNascimento.split('/').reversed.join('-');
+    dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
     return await contratadoProfileRepository.store(
       nome,
@@ -61,7 +62,7 @@ class ContratadoProfileController {
     if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
 
-    dataNascimento = dataNascimento.split('/').reversed.join('-');
+    dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
     return await contratadoProfileRepository.update(
       nome,
