@@ -50,7 +50,7 @@ class _RegisterContratadoState extends State<RegisterContratado> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Contratante", style: AppTextStyles.title.copyWith(fontSize: 26)),
+                Text("Contratado", style: AppTextStyles.title.copyWith(fontSize: 26)),
                 const SizedBox(height: 24),
 
                 CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
