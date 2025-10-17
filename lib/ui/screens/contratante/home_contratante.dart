@@ -97,16 +97,19 @@ class _HomeContratanteState extends State<HomeContratante> {
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16),
-                        child: OfertaCard(
-                          titulo: oferta.titulo,
-                          salario: oferta.salario,
-                          dataInicio: oferta.dataInicio,
-                          dataFim: oferta.dataFim,
-                          onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
-                          onExcluir: () {
-                            if (_isLoading || oferta.id == null) return;
-                            _excluirOferta(oferta.id!);
-                          },
+                        child: GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, '/contratante/candidaturas', arguments: oferta.id),
+                          child: OfertaCard(
+                            titulo: oferta.titulo,
+                            salario: oferta.salario,
+                            dataInicio: oferta.dataInicio,
+                            dataFim: oferta.dataFim,
+                            onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
+                            onExcluir: () {
+                              if (_isLoading || oferta.id == null) return;
+                              _excluirOferta(oferta.id!);
+                            },
+                          ),
                         ),
                       );
                     },
