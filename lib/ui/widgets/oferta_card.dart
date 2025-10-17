@@ -5,20 +5,27 @@ import 'package:work_match_app/ui/widgets/custom_button.dart';
 
 class OfertaCard extends StatelessWidget {
   final String titulo;
-  final String descricao;
+  final double salario;
+  final String dataInicio;
+  final String dataFim;
   final VoidCallback onEditar;
   final VoidCallback onExcluir;
 
   const OfertaCard({
     super.key,
     required this.titulo,
-    required this.descricao,
+    required this.salario,
+    required this.dataInicio,
+    required this.dataFim,
     required this.onEditar,
     required this.onExcluir,
   });
 
   @override
   Widget build(BuildContext context) {
+    String dataInicio = this.dataInicio.split('-').reversed.join('/');
+    String dataFim = this.dataFim.split('-').reversed.join('/');
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.inputBackground,
@@ -32,10 +39,9 @@ class OfertaCard extends StatelessWidget {
           Text(titulo, style: AppTextStyles.titleOferta),
           const SizedBox(height: 8),
 
-          Text(
-            descricao.length > 75 ? '${descricao.substring(0, 75)}...' : descricao,
-            style: AppTextStyles.subtitleOferta,
-          ),
+          Text('Salário: R\$ ${salario.toStringAsFixed(2)}', style: AppTextStyles.subtitleOferta),
+          Text('Data de Início: $dataInicio', style: AppTextStyles.subtitleOferta),
+          Text('Data de Fim: $dataFim', style: AppTextStyles.subtitleOferta),
           const SizedBox(height: 16),
 
           Row(
