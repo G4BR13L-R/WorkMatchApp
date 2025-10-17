@@ -14,6 +14,15 @@ class OfertaService {
     return data.map<OfertaModel>((item) => OfertaModel.fromJson(item)).toList();
   }
 
+  Future<OfertaModel> show(int id) async {
+    final response = await ApiClient.get('/contratante/ofertas/$id');
+
+    if (response.statusCode != 200) ThrowException.request(response.body);
+
+    final data = jsonDecode(response.body);
+    return OfertaModel.fromJson(data);
+  }
+
   Future<OfertaModel> store(
     String titulo,
     String descricao,

@@ -8,6 +8,10 @@ class ContratanteOfertaController {
     return ofertaRepository.index();
   }
 
+  Future<OfertaModel> show(int id) {
+    return ofertaRepository.show(id);
+  }
+
   Future<OfertaModel> register(
     String titulo,
     String descricao,

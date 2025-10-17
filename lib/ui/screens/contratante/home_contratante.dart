@@ -61,8 +61,19 @@ class _HomeContratanteState extends State<HomeContratante> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Ofertas Finalizadas',
+                      backgroundColor: AppColors.primary,
+                      textStyle: AppTextStyles.buttonOferta,
+                      onPressed: () => {},
+                    ),
+                  ),
+
+                  SizedBox(width: 30),
+
                   GestureDetector(
                     onTap: () => Navigator.pushNamed(context, '/contratante/profile'),
                     child: const CircleAvatar(
@@ -91,9 +102,7 @@ class _HomeContratanteState extends State<HomeContratante> {
                           salario: oferta.salario,
                           dataInicio: oferta.dataInicio,
                           dataFim: oferta.dataFim,
-                          onEditar: () {
-                            // Ação editar
-                          },
+                          onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
                           onExcluir: () {
                             if (_isLoading || oferta.id == null) return;
                             _excluirOferta(oferta.id!);

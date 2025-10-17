@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
 import 'package:work_match_app/core/models/cidade_model.dart';
+import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
@@ -29,7 +30,23 @@ class _OfertaContratanteState extends State<OfertaContratante> {
 
   final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
   bool _isLoading = false;
+  bool _isFetching = false;
   CidadeModel? _cidadeSelecionada;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      if (!mounted) return;
+
+      final args = ModalRoute.of(context)?.settings.arguments;
+
+      if (args != null && args is int) {
+        _loadOferta(args);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -46,8 +63,44 @@ class _OfertaContratanteState extends State<OfertaContratante> {
     super.dispose();
   }
 
+  Future<void> _loadOferta(int id) async {
+    setState(() => _isFetching = true);
+
+    try {
+      OfertaModel oferta = await _contratanteOfertaController.show(id);
+
+      String dataInicio = oferta.dataInicio.split('-').reversed.join('/');
+      String dataFim = oferta.dataFim.split('-').reversed.join('/');
+
+      _tituloController.text = oferta.titulo;
+      _salarioController.text = oferta.salario.toStringAsFixed(2);
+      _dataInicioController.text = dataInicio;
+      _dataFimController.text = dataFim;
+      _logradouroController.text = oferta.endereco.logradouro ?? '';
+      _numeroController.text = oferta.endereco.numero ?? '';
+      _complementoController.text = oferta.endereco.complemento ?? '';
+      _bairroController.text = oferta.endereco.bairro ?? '';
+      _cidadeSelecionada = oferta.endereco.cidade;
+      _descricaoController.text = oferta.descricao;
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      setState(() => _isFetching = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    final int? ofertaId = args as int?;
+
+    final bool isEdicao = ofertaId != null;
+
+    if (_isFetching) {
+      return const Scaffold(backgroundColor: AppColors.background, body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -156,8 +209,8 @@ class _OfertaContratanteState extends State<OfertaContratante> {
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
-                  text: "Cadastrar Oferta",
-                  onPressed: () => _isLoading ? null : _gravarOfertaContratante(),
+                  text: isEdicao ? "Editar Oferta" : "Cadastrar Oferta",
+                  onPressed: () => _isLoading ? null : _gravarOfertaContratante(ofertaId),
                 ),
               ),
             ],
@@ -167,7 +220,7 @@ class _OfertaContratanteState extends State<OfertaContratante> {
     );
   }
 
-  Future<void> _gravarOfertaContratante() async {
+  Future<void> _gravarOfertaContratante(int? id) async {
     setState(() => _isLoading = true);
 
     try {
@@ -186,18 +239,34 @@ class _OfertaContratanteState extends State<OfertaContratante> {
 
       if (cidadeId == null) throw Exception("O campo cidade é obrigatório");
 
-      await _contratanteOfertaController.register(
-        _tituloController.text,
-        _descricaoController.text,
-        salario,
-        _dataInicioController.text,
-        _dataFimController.text,
-        _logradouroController.text,
-        _numeroController.text,
-        _complementoController.text,
-        _bairroController.text,
-        cidadeId,
-      );
+      if (id != null) {
+        await _contratanteOfertaController.update(
+          id,
+          _tituloController.text,
+          _descricaoController.text,
+          salario,
+          _dataInicioController.text,
+          _dataFimController.text,
+          _logradouroController.text,
+          _numeroController.text,
+          _complementoController.text,
+          _bairroController.text,
+          cidadeId,
+        );
+      } else {
+        await _contratanteOfertaController.register(
+          _tituloController.text,
+          _descricaoController.text,
+          salario,
+          _dataInicioController.text,
+          _dataFimController.text,
+          _logradouroController.text,
+          _numeroController.text,
+          _complementoController.text,
+          _bairroController.text,
+          cidadeId,
+        );
+      }
 
       if (!mounted) return;
 
