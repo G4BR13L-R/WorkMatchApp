@@ -112,7 +112,7 @@ class _OfertaContratanteState extends State<OfertaContratante> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 10),
           child: Column(
             children: [
               CustomTextField(hintText: "Titulo", icon: Icons.text_fields, controller: _tituloController),
@@ -210,7 +210,7 @@ class _OfertaContratanteState extends State<OfertaContratante> {
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(
-                  text: isEdicao ? "Editar Oferta" : "Cadastrar Oferta",
+                  text: isEdicao ? "Salvar Oferta" : "Cadastrar Oferta",
                   onPressed: () => _isLoading ? null : _gravarOfertaContratante(ofertaId),
                 ),
               ),
