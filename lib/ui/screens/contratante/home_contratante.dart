@@ -67,7 +67,7 @@ class _HomeContratanteState extends State<HomeContratante> {
                     child: CustomButton(
                       text: 'Ofertas Finalizadas',
                       backgroundColor: AppColors.primary,
-                      textStyle: AppTextStyles.buttonOferta,
+                      textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
                       onPressed: () => {},
                     ),
                   ),
