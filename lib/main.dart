@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
-import 'package:work_match_app/ui/screens/auth/login.dart';
 import 'package:work_match_app/ui/screens/auth/account_type.dart';
-import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
+import 'package:work_match_app/ui/screens/auth/login.dart';
 import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/security_account_contratado.dart';
-import 'package:work_match_app/ui/screens/contratante/candidaturas_contratante.dart';
-import 'package:work_match_app/ui/screens/contratante/oferta_contratante.dart';
-import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/oferta_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/security_account_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/visualizar_oferta_contratante.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/contratante/profile': (context) => const ProfileContratante(),
         '/contratante/security_account': (context) => const SecurityAccountContratante(),
         '/contratante/oferta': (context) => const OfertaContratante(),
-        '/contratante/candidaturas': (context) => const CandidaturasContratante(),
+        '/contratante/visualizar_oferta': (context) => const VisualizarOfertaContratante(),
 
         // Contratado
         '/contratado/register': (context) => const RegisterContratado(),

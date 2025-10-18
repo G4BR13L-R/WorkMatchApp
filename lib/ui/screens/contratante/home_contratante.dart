@@ -98,7 +98,9 @@ class _HomeContratanteState extends State<HomeContratante> {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, '/contratante/candidaturas', arguments: oferta.id),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/contratante/visualizar_oferta', arguments: oferta.id);
+                          },
                           child: OfertaCard(
                             titulo: oferta.titulo,
                             salario: oferta.salario,
