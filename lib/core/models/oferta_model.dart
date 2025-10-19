@@ -7,6 +7,7 @@ class OfertaModel {
   final double salario;
   final String dataInicio;
   final String dataFim;
+  final bool finalizada;
   final EnderecoModel endereco;
 
   OfertaModel({
@@ -16,6 +17,7 @@ class OfertaModel {
     required this.salario,
     required this.dataInicio,
     required this.dataFim,
+    required this.finalizada,
     required this.endereco,
   });
 
@@ -27,6 +29,7 @@ class OfertaModel {
       salario: double.parse(json['salario'].toString()),
       dataInicio: json['data_inicio'],
       dataFim: json['data_fim'],
+      finalizada: json['finalizada'],
       endereco: EnderecoModel.fromJson(json['endereco']),
     );
   }
@@ -39,6 +42,7 @@ class OfertaModel {
       'salario': salario,
       'data_inicio': dataInicio,
       'data_fim': dataFim,
+      'finalizada': finalizada,
       'endereco': endereco.toJson(),
     };
 

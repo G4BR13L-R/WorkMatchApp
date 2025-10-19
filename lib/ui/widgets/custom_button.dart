@@ -4,16 +4,16 @@ import 'package:work_match_app/core/theme/app_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
   final Color backgroundColor;
   final TextStyle textStyle;
+  final VoidCallback? onPressed;
 
   const CustomButton({
     super.key,
     required this.text,
-    required this.onPressed,
     this.backgroundColor = AppColors.primary,
     this.textStyle = AppTextStyles.button,
+    this.onPressed,
   });
 
   @override
