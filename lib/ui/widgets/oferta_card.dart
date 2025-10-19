@@ -9,8 +9,12 @@ class OfertaCard extends StatelessWidget {
   final double salario;
   final String dataInicio;
   final String dataFim;
-  final VoidCallback onEditar;
-  final VoidCallback onExcluir;
+  final bool isFinalizada;
+  final bool isContratante;
+  final VoidCallback? onEditar;
+  final VoidCallback? onExcluir;
+  final VoidCallback? onCandidatos;
+  final VoidCallback? onAvaliar;
 
   const OfertaCard({
     super.key,
@@ -18,8 +22,12 @@ class OfertaCard extends StatelessWidget {
     required this.salario,
     required this.dataInicio,
     required this.dataFim,
-    required this.onEditar,
-    required this.onExcluir,
+    required this.isFinalizada,
+    required this.isContratante,
+    this.onEditar,
+    this.onExcluir,
+    this.onCandidatos,
+    this.onAvaliar,
   });
 
   @override
@@ -48,21 +56,41 @@ class OfertaCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CustomButton(
-                text: 'Editar',
-                backgroundColor: AppColors.primary,
-                textStyle: AppTextStyles.buttonOferta,
-                onPressed: onEditar,
-              ),
+              if (isContratante && !isFinalizada) ...[
+                CustomButton(
+                  text: 'Editar',
+                  backgroundColor: AppColors.primary,
+                  textStyle: AppTextStyles.buttonOferta,
+                  onPressed: onEditar,
+                ),
 
-              SizedBox(width: 8),
+                SizedBox(width: 8),
 
-              CustomButton(
-                text: 'Excluir',
-                backgroundColor: AppColors.warning,
-                textStyle: AppTextStyles.buttonOferta,
-                onPressed: onExcluir,
-              ),
+                CustomButton(
+                  text: 'Excluir',
+                  backgroundColor: AppColors.warning,
+                  textStyle: AppTextStyles.buttonOferta,
+                  onPressed: onExcluir,
+                ),
+
+                SizedBox(width: 8),
+
+                CustomButton(
+                  text: 'Candidatos',
+                  backgroundColor: AppColors.primary,
+                  textStyle: AppTextStyles.buttonOferta,
+                  onPressed: onCandidatos,
+                ),
+              ],
+
+              if (isFinalizada) ...[
+                CustomButton(
+                  text: 'Avaliar',
+                  backgroundColor: AppColors.primary,
+                  textStyle: AppTextStyles.buttonOferta,
+                  onPressed: onAvaliar,
+                ),
+              ],
             ],
           ),
         ],
