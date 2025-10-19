@@ -59,7 +59,7 @@ class OfertaCard extends StatelessWidget {
               if (isContratante && !isFinalizada) ...[
                 CustomButton(
                   text: 'Candidatos',
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppColors.accent,
                   textStyle: AppTextStyles.buttonOferta,
                   onPressed: onCandidatos,
                 ),
