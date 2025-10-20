@@ -98,4 +98,8 @@ class ContratanteOfertaController {
   Future<bool> destroy(int id) {
     return ofertaRepository.destroy(id);
   }
+
+  Future<bool> finalizarOferta(int id) {
+    return ofertaRepository.finalizarOferta(id);
+  }
 }
