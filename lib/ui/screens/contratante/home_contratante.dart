@@ -108,7 +108,8 @@ class _HomeContratanteState extends State<HomeContratante> {
                             dataFim: oferta.dataFim,
                             isFinalizada: oferta.finalizada,
                             isContratante: true,
-                            onCandidatos: () => {},
+                            onCandidatos:
+                                () => Navigator.pushNamed(context, '/contratante/candidaturas', arguments: oferta.id),
                             onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
                             onExcluir: () {
                               if (_isLoading || oferta.id == null) return;
