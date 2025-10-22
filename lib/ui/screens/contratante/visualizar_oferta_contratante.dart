@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
+import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
@@ -26,7 +26,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
   String? _estado;
   String? _descricao;
 
-  final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
+  final OfertaController _contratanteOfertaController = OfertaController();
   bool _isFetching = false;
 
   final _textStyleTitulo = TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
+import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
 import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
@@ -29,7 +29,7 @@ class _OfertaContratanteState extends State<OfertaContratante> {
   final TextEditingController _complementoController = TextEditingController();
   final TextEditingController _bairroController = TextEditingController();
 
-  final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
+  final OfertaController _contratanteOfertaController = OfertaController();
   bool _isLoading = false;
   bool _isFetching = false;
   CidadeModel? _cidadeSelecionada;

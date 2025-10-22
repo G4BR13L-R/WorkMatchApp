@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/core/controllers/contratado_profile_controller.dart';
+import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/custom_text_field.dart';
 
@@ -17,7 +17,8 @@ class _SecurityAccountContratadoState extends State<SecurityAccountContratado> {
   final TextEditingController _currentPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
   final TextEditingController _confirmNewPassword = TextEditingController();
-  final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
+  
+  final ProfileController _contratadoProfileController = ProfileController();
   bool _isLoading = false;
 
   @override

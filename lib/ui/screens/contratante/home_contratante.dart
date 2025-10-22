@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
+import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
@@ -16,7 +16,7 @@ class HomeContratante extends StatefulWidget {
 }
 
 class _HomeContratanteState extends State<HomeContratante> {
-  final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
+  final OfertaController _contratanteOfertaController = OfertaController();
 
   List<OfertaModel> _ofertas = [];
   bool _isLoading = false;

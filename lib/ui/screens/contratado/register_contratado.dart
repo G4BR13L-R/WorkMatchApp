@@ -3,7 +3,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/core/controllers/contratado_profile_controller.dart';
+import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/custom_text_field.dart';
 
@@ -23,7 +23,8 @@ class _RegisterContratadoState extends State<RegisterContratado> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
+  
+  final ProfileController _contratadoProfileController = ProfileController();
   bool _isLoading = false;
 
   @override

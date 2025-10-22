@@ -1,45 +1,50 @@
-import 'package:work_match_app/core/models/contratado_model.dart';
-import 'package:work_match_app/core/services/contratado/profile_service.dart';
-import 'package:work_match_app/core/utils/format_helper.dart';
+import 'package:work_match_app/core/models/contratante_model.dart';
+import 'package:work_match_app/core/services/contratante/profile_service.dart';
 
-class ContratadoProfileController {
+class ProfileController {
   final ProfileService _profileService = ProfileService();
 
-  Future<ContratadoModel> show() async {
+  Future<ContratanteModel> show() async {
     return await _profileService.show();
   }
 
-  Future<ContratadoModel> register(
+  Future<ContratanteModel> register(
     String nome,
     String telefone,
-    String dataNascimento,
-    String cpf,
-    String rg,
+    String cnpj,
+    String razaoSocial,
+    String nomeFantasia,
     String email,
     String password,
     String passwordConfirmation,
   ) async {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
-    if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
-    if (dataNascimento.length < 10) throw Exception("o campo data de nascimento é inválido");
-    if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
+    if (cnpj.isEmpty) throw Exception("o campo cnpj é obrigatório");
+    if (razaoSocial.isEmpty) throw Exception("o campo razão social é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
     if (password.isEmpty) throw Exception("o campo senha é obrigatório");
     if (passwordConfirmation.isEmpty) throw Exception("o campo confirmação de senha é obrigatório");
 
-    dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
-
-    return await _profileService.store(nome, telefone, dataNascimento, cpf, rg, email, password, passwordConfirmation);
+    return await _profileService.store(
+      nome,
+      telefone,
+      cnpj,
+      razaoSocial,
+      nomeFantasia,
+      email,
+      password,
+      passwordConfirmation,
+    );
   }
 
   Future<bool> update(
     String nome,
     String telefone,
     String email,
-    String dataNascimento,
-    String cpf,
-    String rg,
+    String cnpj,
+    String razaoSocial,
+    String nomeFantasia,
     String? logradouro,
     String? numero,
     String? complemento,
@@ -48,20 +53,17 @@ class ContratadoProfileController {
   ) async {
     if (nome.isEmpty) throw Exception("O campo nome é obrigatório");
     if (telefone.isEmpty) throw Exception("o campo telefone é obrigatório");
-    if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
-    if (dataNascimento.length < 10) throw Exception("o campo data de nascimento é inválido");
-    if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
+    if (cnpj.isEmpty) throw Exception("o campo cnpj é obrigatório");
+    if (razaoSocial.isEmpty) throw Exception("o campo razão social é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
-
-    dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
     return await _profileService.update(
       nome,
       telefone,
       email,
-      dataNascimento,
-      cpf,
-      rg,
+      cnpj,
+      razaoSocial,
+      nomeFantasia,
       logradouro,
       numero,
       complemento,

@@ -7,7 +7,7 @@ import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/controllers/auth_controller.dart';
-import 'package:work_match_app/core/controllers/contratado_profile_controller.dart';
+import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
 import 'package:work_match_app/ui/widgets/cidade_autocomplete.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/custom_text_field.dart';
@@ -37,7 +37,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
   final _cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   final AuthController _authController = AuthController();
-  final ContratadoProfileController _contratadoProfileController = ContratadoProfileController();
+  final ProfileController _contratadoProfileController = ProfileController();
 
   bool _isLoading = false;
   bool _isFetching = true;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_match_app/core/controllers/contratante_candidaturas_controller.dart';
-import 'package:work_match_app/core/controllers/contratante_oferta_controller.dart';
+import 'package:work_match_app/core/controllers/contratante/candidatura_controller.dart';
+import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
 import 'package:work_match_app/core/models/candidatura_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
@@ -16,8 +16,8 @@ class CandidaturasContratante extends StatefulWidget {
 }
 
 class _CandidaturasContratanteState extends State<CandidaturasContratante> {
-  final ContratanteCandidaturasController _candidaturasController = ContratanteCandidaturasController();
-  final ContratanteOfertaController _contratanteOfertaController = ContratanteOfertaController();
+  final CandidaturaController _candidaturasController = CandidaturaController();
+  final OfertaController _contratanteOfertaController = OfertaController();
 
   List<CandidaturaModel> _candidaturas = [];
   bool _isFetching = false;

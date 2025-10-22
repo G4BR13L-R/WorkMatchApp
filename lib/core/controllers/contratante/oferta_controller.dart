@@ -2,7 +2,7 @@ import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/services/contratante/oferta_service.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
 
-class ContratanteOfertaController {
+class OfertaController {
   final OfertaService _ofertaService = OfertaService();
 
   Future<List<OfertaModel>> index() {

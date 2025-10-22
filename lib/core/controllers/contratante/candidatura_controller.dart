@@ -1,7 +1,7 @@
 import 'package:work_match_app/core/models/candidatura_model.dart';
 import 'package:work_match_app/core/services/contratante/candidatura_service.dart';
 
-class ContratanteCandidaturasController {
+class CandidaturaController {
   final CandidaturaService _candidaturaService = CandidaturaService();
 
   Future<List<CandidaturaModel>> index(int id) {
