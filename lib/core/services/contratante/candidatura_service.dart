@@ -4,9 +4,9 @@ import 'package:work_match_app/core/models/candidatura_model.dart';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/utils/throw_exception.dart';
 
-class CandidaturasService {
-  Future<List<CandidaturaModel>> index(int id) async {
-    final response = await ApiClient.get('/contratante/candidaturas/$id');
+class CandidaturaService {
+  Future<List<CandidaturaModel>> index(int ofertaId) async {
+    final response = await ApiClient.get('/contratante/ofertas/$ofertaId/candidaturas');
 
     if (response.statusCode != 200) ThrowException.request(response.body);
 
@@ -16,7 +16,7 @@ class CandidaturasService {
   }
 
   Future<CandidaturaModel> show(int id) async {
-    final response = await ApiClient.get('/contratante/candidatura/$id');
+    final response = await ApiClient.get('/contratante/candidaturas/$id');
 
     if (response.statusCode != 200) ThrowException.request(response.body);
 
@@ -52,7 +52,7 @@ class CandidaturasService {
 
     return true;
   }
-  
+
   Future<bool> changeStatus(int candidaturaId, int status) async {
     final response = await ApiClient.put('/contratante/candidaturas/$candidaturaId', {'status_id': status});
 

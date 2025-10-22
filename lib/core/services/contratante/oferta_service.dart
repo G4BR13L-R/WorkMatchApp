@@ -99,7 +99,7 @@ class OfertaService {
   }
 
   Future<bool> finalizarOferta(int id) async {
-    final response = await ApiClient.put('/contratante/ofertas/finalizar/$id', {});
+    final response = await ApiClient.put('/contratante/ofertas/$id/finalizar/', {});
 
     if (response.statusCode != 200) return ThrowException.request(response.body);
 

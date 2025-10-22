@@ -1,12 +1,12 @@
 import 'package:work_match_app/core/models/contratado_model.dart';
-import 'package:work_match_app/core/services/contratado_profile_service.dart';
+import 'package:work_match_app/core/services/contratado/profile_service.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
 
 class ContratadoProfileController {
-  final ContratadoProfileService contratadoProfileRepository = ContratadoProfileService();
+  final ProfileService _profileRepository = ProfileService();
 
   Future<ContratadoModel> show() async {
-    return await contratadoProfileRepository.show();
+    return await _profileRepository.show();
   }
 
   Future<ContratadoModel> register(
@@ -30,7 +30,7 @@ class ContratadoProfileController {
 
     dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
-    return await contratadoProfileRepository.store(
+    return await _profileRepository.store(
       nome,
       telefone,
       dataNascimento,
@@ -64,7 +64,7 @@ class ContratadoProfileController {
 
     dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
-    return await contratadoProfileRepository.update(
+    return await _profileRepository.update(
       nome,
       telefone,
       email,
@@ -84,12 +84,12 @@ class ContratadoProfileController {
     if (newPassword.isEmpty) throw Exception("o campo nova senha é obrigatório");
     if (newPasswordConfirmation.isEmpty) throw Exception("o campo confirmação de nova senha é obrigatório");
 
-    return await contratadoProfileRepository.updatePassword(currentPassword, newPassword, newPasswordConfirmation);
+    return await _profileRepository.updatePassword(currentPassword, newPassword, newPasswordConfirmation);
   }
 
   Future<bool> delete(currentPassword) async {
     if (currentPassword.isEmpty) throw Exception("O campo senha atual é obrigatório");
 
-    return await contratadoProfileRepository.delete(currentPassword);
+    return await _profileRepository.delete(currentPassword);
   }
 }

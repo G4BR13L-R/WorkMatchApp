@@ -1,8 +1,8 @@
 import 'package:work_match_app/core/models/candidatura_model.dart';
-import 'package:work_match_app/core/services/candidaturas_service.dart';
+import 'package:work_match_app/core/services/contratante/candidatura_service.dart';
 
 class ContratanteCandidaturasController {
-  final CandidaturasService _candidaturasService = CandidaturasService();
+  final CandidaturaService _candidaturasService = CandidaturaService();
 
   Future<List<CandidaturaModel>> index(int id) {
     return _candidaturasService.index(id);

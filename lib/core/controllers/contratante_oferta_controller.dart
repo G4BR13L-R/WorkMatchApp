@@ -1,16 +1,16 @@
 import 'package:work_match_app/core/models/oferta_model.dart';
-import 'package:work_match_app/core/services/oferta_service.dart';
+import 'package:work_match_app/core/services/contratante/oferta_service.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
 
 class ContratanteOfertaController {
-  final OfertaService ofertaRepository = OfertaService();
+  final OfertaService _ofertaRepository = OfertaService();
 
   Future<List<OfertaModel>> index() {
-    return ofertaRepository.index();
+    return _ofertaRepository.index();
   }
 
   Future<OfertaModel> show(int id) {
-    return ofertaRepository.show(id);
+    return _ofertaRepository.show(id);
   }
 
   Future<OfertaModel> register(
@@ -38,7 +38,7 @@ class ContratanteOfertaController {
     dataInicio = FormatHelper.formatDateToAPI(dataInicio);
     dataFim = FormatHelper.formatDateToAPI(dataFim);
 
-    return ofertaRepository.store(
+    return _ofertaRepository.store(
       titulo,
       descricao,
       salario,
@@ -79,7 +79,7 @@ class ContratanteOfertaController {
     dataInicio = FormatHelper.formatDateToAPI(dataInicio);
     dataFim = FormatHelper.formatDateToAPI(dataFim);
 
-    return ofertaRepository.update(
+    return _ofertaRepository.update(
       id,
       titulo,
       descricao,
@@ -96,10 +96,10 @@ class ContratanteOfertaController {
   }
 
   Future<bool> destroy(int id) {
-    return ofertaRepository.destroy(id);
+    return _ofertaRepository.destroy(id);
   }
 
   Future<bool> finalizarOferta(int id) {
-    return ofertaRepository.finalizarOferta(id);
+    return _ofertaRepository.finalizarOferta(id);
   }
 }
