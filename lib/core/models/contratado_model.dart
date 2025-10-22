@@ -7,6 +7,9 @@ class ContratadoModel {
   final String dataNascimento;
   final String cpf;
   final String? rg;
+  final String? formacoes;
+  final String? habilidades;
+  final String? experiencias;
   final String email;
   final String? password;
   final String? passwordConfirmation;
@@ -19,6 +22,9 @@ class ContratadoModel {
     required this.dataNascimento,
     required this.cpf,
     this.rg,
+    this.formacoes,
+    this.habilidades,
+    this.experiencias,
     required this.email,
     this.password,
     this.passwordConfirmation,
@@ -33,6 +39,9 @@ class ContratadoModel {
       dataNascimento: json['data_nascimento'],
       cpf: json['cpf'],
       rg: json['rg'],
+      formacoes: json['formacoes'],
+      habilidades: json['habilidades'],
+      experiencias: json['experiencias'],
       email: json['email'],
       password: json['password'],
       passwordConfirmation: json['password_confirmation'],
@@ -48,6 +57,9 @@ class ContratadoModel {
       'data_nascimento': dataNascimento,
       'cpf': cpf,
       'rg': rg,
+      'formacoes': formacoes,
+      'habilidades': habilidades,
+      'experiencias': experiencias,
       'email': email,
     };
 

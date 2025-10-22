@@ -26,6 +26,9 @@ class _ProfileContratadoState extends State<ProfileContratado> {
   final TextEditingController _dataNascimentoController = TextEditingController();
   final TextEditingController _cpfController = TextEditingController();
   final TextEditingController _rgController = TextEditingController();
+  final TextEditingController _formacoesController = TextEditingController();
+  final TextEditingController _habilidadesController = TextEditingController();
+  final TextEditingController _experienciasController = TextEditingController();
   final TextEditingController _logradouroController = TextEditingController();
   final TextEditingController _numeroController = TextEditingController();
   final TextEditingController _complementoController = TextEditingController();
@@ -56,6 +59,9 @@ class _ProfileContratadoState extends State<ProfileContratado> {
     _dataNascimentoController.dispose();
     _cpfController.dispose();
     _rgController.dispose();
+    _formacoesController.dispose();
+    _habilidadesController.dispose();
+    _experienciasController.dispose();
     _logradouroController.dispose();
     _numeroController.dispose();
     _complementoController.dispose();
@@ -76,14 +82,16 @@ class _ProfileContratadoState extends State<ProfileContratado> {
       _dataNascimentoController.text = _dataNascimentoFormatter.maskText(dataNascimento);
       _cpfController.text = _cpfFormatter.maskText(contratado.cpf);
       _rgController.text = contratado.rg ?? '';
+      _formacoesController.text = contratado.formacoes ?? '';
+      _habilidadesController.text = contratado.habilidades ?? '';
+      _experienciasController.text = contratado.experiencias ?? '';
       _logradouroController.text = contratado.endereco?.logradouro ?? '';
       _numeroController.text = contratado.endereco?.numero ?? '';
       _complementoController.text = contratado.endereco?.complemento ?? '';
       _bairroController.text = contratado.endereco?.bairro ?? '';
       _cidadeSelecionada = contratado.endereco?.cidade;
     } catch (e) {
-      if (!mounted) return;
-      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+      if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
     } finally {
       setState(() => _isFetching = false);
     }
@@ -135,7 +143,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
 
               CustomTextField(
                 hintText: "Data de Nascimento",
-                icon: Icons.business,
+                icon: Icons.cake,
                 controller: _dataNascimentoController,
                 inputFormatters: [_dataNascimentoFormatter],
                 keyboardType: TextInputType.datetime,
@@ -144,7 +152,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
 
               CustomTextField(
                 hintText: "CPF",
-                icon: Icons.account_balance,
+                icon: Icons.account_box_rounded,
                 controller: _cpfController,
                 inputFormatters: [_cpfFormatter],
                 keyboardType: TextInputType.number,
@@ -153,20 +161,34 @@ class _ProfileContratadoState extends State<ProfileContratado> {
 
               CustomTextField(
                 hintText: "RG",
-                icon: Icons.storefront,
+                icon: Icons.badge,
                 controller: _rgController,
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 40),
 
               CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
               const SizedBox(height: 16),
 
-              CustomTextField(
-                hintText: "Número",
-                icon: Icons.confirmation_number,
-                controller: _numeroController,
-                keyboardType: TextInputType.number,
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: CustomTextField(
+                      hintText: 'Número',
+                      icon: Icons.numbers,
+                      controller: _numeroController,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+
+                  SizedBox(width: 5),
+
+                  Expanded(
+                    flex: 4,
+                    child: CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
 
@@ -177,14 +199,41 @@ class _ProfileContratadoState extends State<ProfileContratado> {
               ),
               const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
-              const SizedBox(height: 16),
-
               CidadeAutoComplete(
                 initialValue: _cidadeSelecionada,
                 onSelected: (cidade) {
                   setState(() => _cidadeSelecionada = cidade);
                 },
+              ),
+              const SizedBox(height: 40),
+
+              CustomTextField(
+                hintText: "Formações",
+                icon: Icons.text_fields,
+                controller: _formacoesController,
+                keyboardType: TextInputType.multiline,
+                minLine: 4,
+                maxLine: null,
+              ),
+              const SizedBox(height: 16),
+
+              CustomTextField(
+                hintText: "Habilidades",
+                icon: Icons.text_fields,
+                controller: _habilidadesController,
+                keyboardType: TextInputType.multiline,
+                minLine: 4,
+                maxLine: null,
+              ),
+              const SizedBox(height: 16),
+
+              CustomTextField(
+                hintText: "Experiencias",
+                icon: Icons.text_fields,
+                controller: _experienciasController,
+                keyboardType: TextInputType.multiline,
+                minLine: 4,
+                maxLine: null,
               ),
               const SizedBox(height: 24),
 
@@ -220,6 +269,9 @@ class _ProfileContratadoState extends State<ProfileContratado> {
         _dataNascimentoController.text.trim(),
         _cpfController.text.trim(),
         _rgController.text.trim(),
+        _formacoesController.text.trim(),
+        _habilidadesController.text.trim(),
+        _experienciasController.text.trim(),
         _logradouroController.text.trim(),
         _numeroController.text.trim(),
         _complementoController.text.trim(),
@@ -231,8 +283,7 @@ class _ProfileContratadoState extends State<ProfileContratado> {
 
       SnackbarHelper.showSuccess(context, "Perfil atualizado com sucesso!");
     } catch (e) {
-      if (!mounted) return;
-      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+      if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
     } finally {
       setState(() => _isLoading = false);
     }
