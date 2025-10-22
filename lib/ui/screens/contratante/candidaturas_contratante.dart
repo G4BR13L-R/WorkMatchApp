@@ -121,7 +121,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
 
       if (!mounted) return;
 
-      SnackbarHelper.showSuccess(context, 'Candidato contratado');
+      SnackbarHelper.showSuccess(context, 'Candidato contratado!');
 
       if (_ofertaId != null) _loadCandidaturas(_ofertaId!);
     } catch (e) {
@@ -139,7 +139,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
 
       if (!mounted) return;
 
-      SnackbarHelper.showSuccess(context, 'Candidato reprovado');
+      SnackbarHelper.showSuccess(context, 'Candidato reprovado!');
 
       if (_ofertaId != null) _loadCandidaturas(_ofertaId!);
     } catch (e) {
