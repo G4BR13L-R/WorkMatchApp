@@ -2,17 +2,17 @@ import 'package:work_match_app/core/models/user_model.dart';
 import 'package:work_match_app/core/services/auth_service.dart';
 
 class AuthController {
-  final AuthService _repository = AuthService();
+  final AuthService _authService = AuthService();
 
   Future<UserModel> login(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       throw Exception("Preencha todos os campos");
     }
 
-    return await _repository.login(email, password);
+    return await _authService.login(email, password);
   }
 
   Future<bool> logout() async {
-    return await _repository.logout();
+    return await _authService.logout();
   }
 }
