@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
+import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
@@ -107,12 +108,18 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Oferta", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+      ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(top: 4, bottom: 16, left: 16, right: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
