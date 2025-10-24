@@ -62,11 +62,15 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Candidaturas", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.all(16), child: Text("Candidaturas", style: AppTextStyles.title)),
-
             if (_candidaturas.isEmpty)
               Expanded(child: Center(child: Text("Nenhum candidato encontrado", style: AppTextStyles.subtitle)))
             else
@@ -85,7 +89,8 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                           salario: candidatura.salario,
                           cidade: candidatura.contratado.endereco?.cidade?.descricao ?? '',
                           estado: candidatura.contratado.endereco?.cidade?.estado?.sigla ?? '',
-                          status: candidatura.status.descricao,
+                          status: candidatura.status,
+                          oferta: candidatura.oferta,
                           onContratar: () => _isLoading ? null : _contratar(candidatura.id!),
                           onReprovar: () => _isLoading ? null : _reprovar(candidatura.id!),
                         ),
@@ -117,7 +122,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
     setState(() => _isLoading = true);
 
     try {
-      await _candidaturasController.changeStatus(candidaturaId, 3);
+      await _candidaturasController.changeStatus(candidaturaId, 2);
 
       if (!mounted) return;
 
@@ -135,7 +140,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
     setState(() => _isLoading = true);
 
     try {
-      await _candidaturasController.changeStatus(candidaturaId, 4);
+      await _candidaturasController.changeStatus(candidaturaId, 3);
 
       if (!mounted) return;
 
