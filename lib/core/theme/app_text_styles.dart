@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_colors.dart';
 
 class AppTextStyles {
@@ -22,5 +23,5 @@ class AppTextStyles {
 
   static const TextStyle button = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black);
 
-  static const TextStyle buttonOferta = TextStyle(fontSize: 14, color: Colors.black);
+  static const TextStyle buttonOferta = TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black);
 }

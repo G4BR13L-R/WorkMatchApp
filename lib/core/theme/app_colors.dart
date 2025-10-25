@@ -7,4 +7,5 @@ class AppColors {
   static const Color textLight = Colors.white;
   static const Color accent = Color(0xFF00E5FF);
   static const Color warning = Color(0xFFDC143C);
+  static const Color success = Color(0xFF28A745);
 }
