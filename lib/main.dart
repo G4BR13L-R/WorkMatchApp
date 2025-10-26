@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
 import 'package:work_match_app/ui/screens/auth/account_type.dart';
 import 'package:work_match_app/ui/screens/auth/login.dart';
+import 'package:work_match_app/ui/screens/avaliar_usuario.dart';
 import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginScreen(),
         '/account_type': (context) => const AccountType(),
+        '/avaliar_usuario': (context) => const AvaliarUsuario(),
 
         // Contratante
         '/contratante/register': (context) => const RegisterContratante(),

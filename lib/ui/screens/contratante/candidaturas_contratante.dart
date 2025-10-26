@@ -97,6 +97,18 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                           oferta: candidatura.oferta,
                           onContratar: () => _isLoading ? null : _contratar(candidatura.id!),
                           onReprovar: () => _isLoading ? null : _reprovar(candidatura.id!),
+                          onAvaliar:
+                              () => Navigator.pushNamed(
+                                context,
+                                '/avaliar_usuario',
+                                arguments: {
+                                  'autor_id': candidatura.oferta.id,
+                                  'autor_tipo': 'contratante',
+                                  'destinatario_id': candidatura.contratado.id,
+                                  'destinatario_tipo': 'contratado',
+                                  'oferta_id': candidatura.oferta.id,
+                                },
+                              ),
                         ),
                       ),
                     );
