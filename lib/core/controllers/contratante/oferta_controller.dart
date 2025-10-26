@@ -5,8 +5,8 @@ import 'package:work_match_app/core/utils/format_helper.dart';
 class OfertaController {
   final OfertaService _ofertaService = OfertaService();
 
-  Future<List<OfertaModel>> index() {
-    return _ofertaService.index();
+  Future<List<OfertaModel>> index({bool? status}) {
+    return _ofertaService.index(status: status);
   }
 
   Future<OfertaModel> show(int id) {

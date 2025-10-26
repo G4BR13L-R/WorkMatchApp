@@ -5,8 +5,9 @@ import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/utils/throw_exception.dart';
 
 class OfertaService {
-  Future<List<OfertaModel>> index() async {
-    final response = await ApiClient.get('/contratante/ofertas');
+  Future<List<OfertaModel>> index({bool? status}) async {
+    final finalizadas = status == null ? '' : (status ? 'true' : 'false');
+    final response = await ApiClient.get('/contratante/ofertas?finalizada=$finalizadas');
 
     if (response.statusCode != 200) ThrowException.request(response.body);
 
