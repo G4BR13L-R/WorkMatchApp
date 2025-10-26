@@ -56,7 +56,7 @@ class OfertaCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if (isContratante && !isFinalizada) ...[
+              if (isContratante) ...[
                 CustomButton(
                   text: 'Candidatos',
                   backgroundColor: AppColors.accent,
@@ -66,24 +66,26 @@ class OfertaCard extends StatelessWidget {
 
                 SizedBox(width: 8),
 
-                CustomButton(
-                  text: 'Editar',
-                  backgroundColor: AppColors.primary,
-                  textStyle: AppTextStyles.buttonOferta,
-                  onPressed: onEditar,
-                ),
+                if (!isFinalizada) ...[
+                  CustomButton(
+                    text: 'Editar',
+                    backgroundColor: AppColors.primary,
+                    textStyle: AppTextStyles.buttonOferta,
+                    onPressed: onEditar,
+                  ),
 
-                SizedBox(width: 8),
+                  SizedBox(width: 8),
 
-                CustomButton(
-                  text: 'Excluir',
-                  backgroundColor: AppColors.warning,
-                  textStyle: AppTextStyles.buttonOferta,
-                  onPressed: onExcluir,
-                ),
+                  CustomButton(
+                    text: 'Excluir',
+                    backgroundColor: AppColors.warning,
+                    textStyle: AppTextStyles.buttonOferta,
+                    onPressed: onExcluir,
+                  ),
+                ],
               ],
 
-              if (isFinalizada) ...[
+              if (!isContratante && isFinalizada) ...[
                 CustomButton(
                   text: 'Avaliar',
                   backgroundColor: AppColors.primary,
