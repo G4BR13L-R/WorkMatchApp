@@ -10,6 +10,7 @@ import 'package:work_match_app/ui/screens/contratado/security_account_contratado
 import 'package:work_match_app/ui/screens/contratante/candidaturas_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/oferta_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/oferta_finalizada_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/security_account_contratante.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/contratante/profile': (context) => const ProfileContratante(),
         '/contratante/security_account': (context) => const SecurityAccountContratante(),
         '/contratante/oferta': (context) => const OfertaContratante(),
+        '/contratante/oferta_finalizada': (context) => const OfertaFinalizadaContratante(),
         '/contratante/visualizar_oferta': (context) => const VisualizarOfertaContratante(),
         '/contratante/candidaturas': (context) => CandidaturasContratante(),
 

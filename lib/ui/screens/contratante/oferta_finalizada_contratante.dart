@@ -4,22 +4,19 @@ import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/ui/widgets/custom_button.dart';
-import 'package:work_match_app/ui/widgets/custom_dialog.dart';
 import 'package:work_match_app/ui/widgets/oferta_card.dart';
 
-class HomeContratante extends StatefulWidget {
-  const HomeContratante({super.key});
+class OfertaFinalizadaContratante extends StatefulWidget {
+  const OfertaFinalizadaContratante({super.key});
 
   @override
-  State<HomeContratante> createState() => _HomeContratanteState();
+  State<OfertaFinalizadaContratante> createState() => _OfertaFinalizadaContratanteState();
 }
 
-class _HomeContratanteState extends State<HomeContratante> {
+class _OfertaFinalizadaContratanteState extends State<OfertaFinalizadaContratante> {
   final OfertaController _contratanteOfertaController = OfertaController();
 
   List<OfertaModel> _ofertas = [];
-  bool _isLoading = false;
   bool _isFetching = false;
 
   @override
@@ -32,7 +29,7 @@ class _HomeContratanteState extends State<HomeContratante> {
     setState(() => _isFetching = true);
 
     try {
-      final ofertas = await _contratanteOfertaController.index(status: false); // Ofertas não finalizadas.
+      final ofertas = await _contratanteOfertaController.index(status: true); // Ofertas finalizadas.
 
       if (mounted) setState(() => _ofertas = ofertas);
     } catch (e) {
@@ -50,44 +47,19 @@ class _HomeContratanteState extends State<HomeContratante> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () => Navigator.pushNamed(context, '/contratante/oferta'),
-        child: const Icon(Icons.add, color: Colors.black),
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Ofertas Finalizadas", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Ofertas Finalizadas',
-                      backgroundColor: AppColors.primary,
-                      textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                      onPressed: () => Navigator.pushNamed(context, '/contratante/oferta_finalizada'),
-                    ),
-                  ),
-
-                  SizedBox(width: 30),
-
-                  GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/contratante/profile'),
-                    child: const CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.primary,
-                      child: Icon(Icons.person, color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
               if (_ofertas.isEmpty)
-                Expanded(child: Center(child: Text("Nenhuma oferta cadastrada", style: AppTextStyles.subtitle)))
+                Expanded(child: Center(child: Text("Nenhuma oferta finalizada", style: AppTextStyles.subtitle)))
               else
                 Expanded(
                   child: ListView.builder(
@@ -118,11 +90,6 @@ class _HomeContratanteState extends State<HomeContratante> {
                                   '/contratante/candidaturas',
                                   arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
                                 ),
-                            onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
-                            onExcluir: () {
-                              if (_isLoading || oferta.id == null) return;
-                              _excluirOferta(oferta.id!);
-                            },
                           ),
                         ),
                       );
@@ -134,31 +101,5 @@ class _HomeContratanteState extends State<HomeContratante> {
         ),
       ),
     );
-  }
-
-  Future<void> _excluirOferta(int id) async {
-    setState(() => _isLoading = true);
-
-    try {
-      final status = await CustomDialog(
-        context,
-        'Confirmar Exclusão',
-        'Deseja realmente excluir esta oferta?',
-        type: 'delete',
-      );
-
-      if (!mounted || !status) return;
-
-      await _contratanteOfertaController.destroy(id);
-
-      if (!mounted) return;
-
-      SnackbarHelper.showSuccess(context, "Oferta excluída com sucesso!");
-      _loadOfertas();
-    } catch (e) {
-      if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
   }
 }
