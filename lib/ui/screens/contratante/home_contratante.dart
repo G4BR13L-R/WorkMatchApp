@@ -32,7 +32,7 @@ class _HomeContratanteState extends State<HomeContratante> {
     setState(() => _isFetching = true);
 
     try {
-      final ofertas = await _contratanteOfertaController.index();
+      final ofertas = await _contratanteOfertaController.index(status: false); // Ofertas não finalizadas.
 
       if (mounted) setState(() => _ofertas = ofertas);
     } catch (e) {
@@ -99,7 +99,11 @@ class _HomeContratanteState extends State<HomeContratante> {
                         padding: const EdgeInsets.only(bottom: 16),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/contratante/visualizar_oferta', arguments: oferta.id);
+                            Navigator.pushNamed(
+                              context,
+                              '/contratante/visualizar_oferta',
+                              arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
+                            );
                           },
                           child: OfertaCard(
                             titulo: oferta.titulo,
@@ -109,7 +113,11 @@ class _HomeContratanteState extends State<HomeContratante> {
                             isFinalizada: oferta.finalizada,
                             isContratante: true,
                             onCandidatos:
-                                () => Navigator.pushNamed(context, '/contratante/candidaturas', arguments: oferta.id),
+                                () => Navigator.pushNamed(
+                                  context,
+                                  '/contratante/candidaturas',
+                                  arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
+                                ),
                             onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
                             onExcluir: () {
                               if (_isLoading || oferta.id == null) return;

@@ -30,6 +30,9 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
   final OfertaController _contratanteOfertaController = OfertaController();
   bool _isFetching = false;
 
+  int? _ofertaId;
+  late bool _ofertaFinalizada;
+
   final _textStyleTitulo = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,
@@ -48,10 +51,13 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
     Future.microtask(() {
       if (!mounted) return;
 
-      final args = ModalRoute.of(context)?.settings.arguments;
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      if (args != null && args is int) {
-        _loadOferta(args);
+      _ofertaId = args?['oferta_id'] as int?;
+      _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+
+      if (_ofertaId != null) {
+        _loadOferta(_ofertaId!);
       }
     });
   }
@@ -99,9 +105,6 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    final int? ofertaId = args as int?;
-
     if (_isFetching) {
       return const Scaffold(backgroundColor: AppColors.background, body: Center(child: CircularProgressIndicator()));
     }
@@ -161,7 +164,12 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CustomButton(
                   text: "Candidatos",
-                  onPressed: () => Navigator.pushNamed(context, '/contratante/candidaturas', arguments: ofertaId),
+                  onPressed:
+                      () => Navigator.pushNamed(
+                        context,
+                        '/contratante/candidaturas',
+                        arguments: {'oferta_id': _ofertaId, 'oferta_finalizada': _ofertaFinalizada},
+                      ),
                 ),
               ),
             ),

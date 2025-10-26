@@ -23,6 +23,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
   bool _isFetching = false;
   bool _isLoading = false;
   int? _ofertaId;
+  late bool _ofertaFinalizada;
 
   @override
   void initState() {
@@ -31,11 +32,13 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
     Future.microtask(() {
       if (!mounted) return;
 
-      final args = ModalRoute.of(context)?.settings.arguments;
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      if (args != null && args is int) {
-        _ofertaId = args;
-        _loadCandidaturas(args);
+      _ofertaId = args?['oferta_id'] as int?;
+      _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+
+      if (_ofertaId != null) {
+        _loadCandidaturas(_ofertaId!);
       }
     });
   }
@@ -86,6 +89,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                         onTap: () => {},
                         child: CandidaturaCard(
                           nome: candidatura.contratado.nome,
+                          telefone: candidatura.contratado.telefone,
                           salario: candidatura.salario,
                           cidade: candidatura.contratado.endereco?.cidade?.descricao ?? '',
                           estado: candidatura.contratado.endereco?.cidade?.estado?.sigla ?? '',
@@ -100,18 +104,20 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                 ),
               ),
 
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: CustomButton(
-                  text: "Finalizar Oferta",
-                  backgroundColor: AppColors.primary,
-                  textStyle: AppTextStyles.buttonOferta,
-                  onPressed: _isLoading ? null : _finalizarOferta,
+            if (!_ofertaFinalizada) ...[
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CustomButton(
+                    text: "Finalizar Oferta",
+                    backgroundColor: AppColors.primary,
+                    textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+                    onPressed: _isLoading ? null : _finalizarOferta,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
