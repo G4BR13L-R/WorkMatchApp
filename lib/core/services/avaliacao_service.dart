@@ -5,7 +5,7 @@ import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/utils/throw_exception.dart';
 
 class AvaliacaoService {
-  Future<AvaliacaoModel> show(
+  Future<AvaliacaoModel?> show(
     int autorId,
     String autorTipo,
     int destinatarioId,
@@ -23,7 +23,7 @@ class AvaliacaoService {
     if (response.statusCode != 200) return ThrowException.request(response.body);
 
     final data = jsonDecode(response.body);
-    return AvaliacaoModel.fromJson(data);
+    return (data is Map && data.isEmpty) ? null : AvaliacaoModel.fromJson(data);
   }
 
   Future<AvaliacaoModel> store(
@@ -33,7 +33,7 @@ class AvaliacaoService {
     String destinatarioTipo,
     int ofertaId,
     int nota,
-    String comentario,
+    String? comentario,
   ) async {
     final response = await ApiClient.post('/avaliacao', {
       'autor_id': autorId,
@@ -45,14 +45,31 @@ class AvaliacaoService {
       'comentario': comentario,
     });
 
-    if (response.statusCode != 200) return ThrowException.request(response.body);
+    if (response.statusCode != 201) return ThrowException.request(response.body);
 
     final data = jsonDecode(response.body);
     return AvaliacaoModel.fromJson(data['user']);
   }
 
-  Future<bool> update(int id, int nota, String comentario) async {
-    final response = await ApiClient.put('/avaliacao/$id', {'nota': nota, 'comentario': comentario});
+  Future<bool> update(
+    int id,
+    int autorId,
+    String autorTipo,
+    int destinatarioId,
+    String destinatarioTipo,
+    int ofertaId,
+    int nota,
+    String? comentario,
+  ) async {
+    final response = await ApiClient.put('/avaliacao/$id', {
+      'autor_id': autorId,
+      'autor_tipo': autorTipo,
+      'destinatario_id': destinatarioId,
+      'destinatario_tipo': destinatarioTipo,
+      'oferta_id': ofertaId,
+      'nota': nota,
+      'comentario': comentario,
+    });
 
     if (response.statusCode != 200) return ThrowException.request(response.body);
 
