@@ -23,7 +23,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
   bool _isFetching = false;
   bool _isLoading = false;
   int? _ofertaId;
-  late bool _ofertaFinalizada;
+  bool _ofertaFinalizada = false;
 
   @override
   void initState() {
@@ -34,8 +34,10 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      _ofertaId = args?['oferta_id'] as int?;
-      _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+      setState(() {
+        _ofertaId = args?['oferta_id'] as int?;
+        _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+      });
 
       if (_ofertaId != null) {
         _loadCandidaturas(_ofertaId!);
@@ -102,7 +104,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                                 context,
                                 '/avaliar_usuario',
                                 arguments: {
-                                  'autor_id': candidatura.oferta.id,
+                                  'autor_id': candidatura.oferta.contratante.id,
                                   'autor_tipo': 'contratante',
                                   'destinatario_id': candidatura.contratado.id,
                                   'destinatario_tipo': 'contratado',

@@ -1,3 +1,4 @@
+import 'package:work_match_app/core/models/contratante_model.dart';
 import 'package:work_match_app/core/models/endereco_model.dart';
 
 class OfertaModel {
@@ -9,6 +10,7 @@ class OfertaModel {
   final String dataFim;
   final bool finalizada;
   final EnderecoModel endereco;
+  final ContratanteModel contratante;
 
   OfertaModel({
     this.id,
@@ -19,6 +21,7 @@ class OfertaModel {
     required this.dataFim,
     required this.finalizada,
     required this.endereco,
+    required this.contratante,
   });
 
   factory OfertaModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +34,7 @@ class OfertaModel {
       dataFim: json['data_fim'],
       finalizada: json['finalizada'],
       endereco: EnderecoModel.fromJson(json['endereco']),
+      contratante: ContratanteModel.fromJson(json['contratante']),
     );
   }
 
@@ -44,6 +48,7 @@ class OfertaModel {
       'data_fim': dataFim,
       'finalizada': finalizada,
       'endereco': endereco.toJson(),
+      'contratante': contratante.toJson(),
     };
 
     return dadosOferta;
