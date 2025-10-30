@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/controllers/contratante/oferta_controller.dart';
+import 'package:work_match_app/core/models/avaliacao_model.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
@@ -26,6 +27,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
   String? _cidade;
   String? _estado;
   String? _descricao;
+  List<AvaliacaoModel>? _avaliacoes;
 
   final OfertaController _ofertaController = OfertaController();
   bool _isFetching = false;
@@ -80,6 +82,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
         _cidade = oferta.endereco.cidade?.descricao ?? '';
         _estado = oferta.endereco.cidade?.estado?.descricao ?? '';
         _descricao = oferta.descricao;
+        _avaliacoes = oferta.avaliacoes;
       });
     } catch (e) {
       if (!mounted) return;
@@ -98,7 +101,40 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Text("$label: ", style: _textStyleLabel), Expanded(child: Text(value, style: _textStyleValor))],
+        children: [
+          if (label.isNotEmpty) Text("$label: ", style: _textStyleLabel),
+          Expanded(child: Text(value, style: _textStyleValor)),
+        ],
+      ),
+    );
+  }
+
+  Widget _divider() => const Divider(height: 32, color: Colors.white24, thickness: 1);
+
+  Widget _avaliacaoItem(AvaliacaoModel avaliacao) {
+    return Container(
+      margin: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(color: Colors.white12, borderRadius: BorderRadius.circular(8)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: List.generate(5, (index) {
+              final i = index + 1;
+              return Icon(i <= (avaliacao.nota) ? Icons.star : Icons.star_border, color: Colors.amber, size: 22);
+            }),
+          ),
+          const SizedBox(height: 6),
+
+          if (avaliacao.comentario != null && avaliacao.comentario!.trim().isNotEmpty)
+            Text(avaliacao.comentario!, style: _textStyleValor),
+          const SizedBox(height: 6),
+          Text(
+            "Por: ${avaliacao.oferta.contratante.nome}",
+            style: _textStyleValor.copyWith(fontStyle: FontStyle.italic, fontSize: 14),
+          ),
+        ],
       ),
     );
   }
@@ -135,7 +171,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
                     if (_dataInicio != null || _dataFim != null)
                       _infoRow("Período", "${_dataInicio ?? '-'} até ${_dataFim ?? '-'}"),
 
-                    const Divider(height: 32, color: Colors.white24, thickness: 1),
+                    _divider(),
 
                     // Localização
                     Text("Localização", style: _textStyleTopico),
@@ -147,12 +183,24 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
                     _infoRow("Cidade", _cidade ?? ''),
                     _infoRow("Estado", _estado ?? ''),
 
-                    const Divider(height: 32, color: Colors.white24, thickness: 1),
+                    _divider(),
 
                     // Descrição
                     Text("Descrição da Vaga", style: _textStyleTopico),
                     const SizedBox(height: 8),
                     Text(_descricao ?? '-', style: _textStyleValor, textAlign: TextAlign.justify),
+
+                    _divider(),
+                    Text("Avaliações", style: _textStyleTopico),
+
+                    if (_avaliacoes != null && _avaliacoes!.isNotEmpty) ...[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _avaliacoes!.map((avaliacao) => _avaliacaoItem(avaliacao)).toList(),
+                      ),
+                    ] else ...[
+                      _infoRow("", "Ainda não há avaliações."),
+                    ],
                   ],
                 ),
               ),
