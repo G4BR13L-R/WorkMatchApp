@@ -27,7 +27,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
   String? _estado;
   String? _descricao;
 
-  final OfertaController _contratanteOfertaController = OfertaController();
+  final OfertaController _ofertaController = OfertaController();
   bool _isFetching = false;
 
   int? _ofertaId;
@@ -42,7 +42,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
 
   final _textStyleTopico = TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary);
   final _textStyleLabel = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textLight);
-  final _textStyleValor = TextStyle(fontSize: 16, color: AppColors.textLight, height: 1.5);
+  final _textStyleValor = TextStyle(fontSize: 16, color: AppColors.textLight);
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
     setState(() => _isFetching = true);
 
     try {
-      OfertaModel oferta = await _contratanteOfertaController.show(id);
+      OfertaModel oferta = await _ofertaController.show(id);
 
       setState(() {
         _titulo = oferta.titulo;
@@ -97,7 +97,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [Text("$label: ", style: _textStyleLabel), Expanded(child: Text(value, style: _textStyleValor))],
       ),
     );
