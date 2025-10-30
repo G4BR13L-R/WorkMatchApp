@@ -57,40 +57,48 @@ class OfertaCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               if (isContratante) ...[
-                CustomButton(
-                  text: 'Candidatos',
-                  backgroundColor: AppColors.accent,
-                  textStyle: AppTextStyles.buttonOferta,
-                  onPressed: onCandidatos,
+                Expanded(
+                  child: CustomButton(
+                    text: 'Candidatos',
+                    backgroundColor: AppColors.accent,
+                    textStyle: AppTextStyles.buttonOferta,
+                    onPressed: onCandidatos,
+                  ),
                 ),
 
-                SizedBox(width: 8),
-
                 if (!isFinalizada) ...[
-                  CustomButton(
-                    text: 'Editar',
-                    backgroundColor: AppColors.primary,
-                    textStyle: AppTextStyles.buttonOferta,
-                    onPressed: onEditar,
+                  SizedBox(width: 8),
+
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Editar',
+                      backgroundColor: AppColors.primary,
+                      textStyle: AppTextStyles.buttonOferta,
+                      onPressed: onEditar,
+                    ),
                   ),
 
                   SizedBox(width: 8),
 
-                  CustomButton(
-                    text: 'Excluir',
-                    backgroundColor: AppColors.warning,
-                    textStyle: AppTextStyles.buttonOferta,
-                    onPressed: onExcluir,
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Excluir',
+                      backgroundColor: AppColors.warning,
+                      textStyle: AppTextStyles.buttonOferta,
+                      onPressed: onExcluir,
+                    ),
                   ),
                 ],
               ],
 
               if (!isContratante && isFinalizada) ...[
-                CustomButton(
-                  text: 'Avaliar',
-                  backgroundColor: AppColors.primary,
-                  textStyle: AppTextStyles.buttonOferta,
-                  onPressed: onAvaliar,
+                Expanded(
+                  child: CustomButton(
+                    text: 'Avaliar',
+                    backgroundColor: AppColors.primary,
+                    textStyle: AppTextStyles.buttonOferta,
+                    onPressed: onAvaliar,
+                  ),
                 ),
               ],
             ],
