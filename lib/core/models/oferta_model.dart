@@ -1,3 +1,4 @@
+import 'package:work_match_app/core/models/avaliacao_model.dart';
 import 'package:work_match_app/core/models/contratante_model.dart';
 import 'package:work_match_app/core/models/endereco_model.dart';
 
@@ -11,6 +12,7 @@ class OfertaModel {
   final bool finalizada;
   final EnderecoModel endereco;
   final ContratanteModel contratante;
+  final List<AvaliacaoModel>? avaliacoes;
 
   OfertaModel({
     this.id,
@@ -22,9 +24,16 @@ class OfertaModel {
     required this.finalizada,
     required this.endereco,
     required this.contratante,
+    this.avaliacoes,
   });
 
   factory OfertaModel.fromJson(Map<String, dynamic> json) {
+    List<AvaliacaoModel> avaliacoes = [];
+
+    if (json['avaliacoes'] != null) {
+      avaliacoes = List<AvaliacaoModel>.from(json['avaliacoes'].map((x) => AvaliacaoModel.fromJson(x)));
+    }
+
     return OfertaModel(
       id: json['id'],
       titulo: json['titulo'],
@@ -35,6 +44,7 @@ class OfertaModel {
       finalizada: json['finalizada'],
       endereco: EnderecoModel.fromJson(json['endereco']),
       contratante: ContratanteModel.fromJson(json['contratante']),
+      avaliacoes: avaliacoes,
     );
   }
 
@@ -49,6 +59,7 @@ class OfertaModel {
       'finalizada': finalizada,
       'endereco': endereco.toJson(),
       'contratante': contratante.toJson(),
+      'avaliacoes': avaliacoes?.map((x) => x.toJson()).toList(),
     };
 
     return dadosOferta;
