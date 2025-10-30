@@ -15,6 +15,7 @@ import 'package:work_match_app/ui/screens/contratante/oferta_finalizada_contrata
 import 'package:work_match_app/ui/screens/contratante/profile_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/register_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/security_account_contratante.dart';
+import 'package:work_match_app/ui/screens/contratante/visualizar_candidatura_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/visualizar_oferta_contratante.dart';
 
 Future<void> main() async {
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/contratante/oferta_finalizada': (context) => const OfertaFinalizadaContratante(),
         '/contratante/visualizar_oferta': (context) => const VisualizarOfertaContratante(),
         '/contratante/candidaturas': (context) => CandidaturasContratante(),
+        '/contratante/visualizar_candidatura': (context) => VisualizarCandidaturaContratante(),
 
         // Contratado
         '/contratado/register': (context) => const RegisterContratado(),

@@ -88,7 +88,17 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: GestureDetector(
-                        onTap: () => {},
+                        onTap: () async {
+                          final result = await Navigator.pushNamed(
+                            context,
+                            '/contratante/visualizar_candidatura',
+                            arguments: candidatura.id,
+                          );
+
+                          if (result == true && _ofertaId != null) {
+                            _loadCandidaturas(_ofertaId!);
+                          }
+                        },
                         child: CandidaturaCard(
                           nome: candidatura.contratado.nome,
                           telefone: candidatura.contratado.telefone,
@@ -97,8 +107,8 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
                           estado: candidatura.contratado.endereco?.cidade?.estado?.sigla ?? '',
                           status: candidatura.status,
                           oferta: candidatura.oferta,
-                          onContratar: () => _isLoading ? null : _contratar(candidatura.id!),
-                          onReprovar: () => _isLoading ? null : _reprovar(candidatura.id!),
+                          onContratar: () => _isLoading ? null : _changeStatus(candidatura.id!, 2),
+                          onReprovar: () => _isLoading ? null : _changeStatus(candidatura.id!, 3),
                           onAvaliar:
                               () => Navigator.pushNamed(
                                 context,
@@ -138,33 +148,15 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
     );
   }
 
-  Future<void> _contratar(int candidaturaId) async {
+  Future<void> _changeStatus(int candidaturaId, int statusId) async {
     setState(() => _isLoading = true);
 
     try {
-      await _candidaturasController.changeStatus(candidaturaId, 2);
+      await _candidaturasController.changeStatus(candidaturaId, statusId);
 
       if (!mounted) return;
 
-      SnackbarHelper.showSuccess(context, 'Candidato contratado!');
-
-      if (_ofertaId != null) _loadCandidaturas(_ofertaId!);
-    } catch (e) {
-      SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
-  Future<void> _reprovar(int candidaturaId) async {
-    setState(() => _isLoading = true);
-
-    try {
-      await _candidaturasController.changeStatus(candidaturaId, 3);
-
-      if (!mounted) return;
-
-      SnackbarHelper.showSuccess(context, 'Candidato reprovado!');
+      SnackbarHelper.showSuccess(context, statusId == 2 ? 'Candidato contratado!' : 'Candidato reprovado!');
 
       if (_ofertaId != null) _loadCandidaturas(_ofertaId!);
     } catch (e) {
