@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_match_app/core/controllers/contratante/candidatura_controller.dart';
+import 'package:work_match_app/core/models/avaliacao_model.dart';
 import 'package:work_match_app/core/models/candidatura_model.dart';
 import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/models/status_model.dart';
@@ -34,6 +35,7 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
   double? _salario;
   StatusModel? _status;
   OfertaModel? _oferta;
+  List<AvaliacaoModel>? _avaliacoes;
 
   final CandidaturaController _candidaturaController = CandidaturaController();
   bool _isFetching = false;
@@ -92,6 +94,7 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
         _salario = candidatura.salario;
         _status = candidatura.status;
         _oferta = candidatura.oferta;
+        _avaliacoes = candidatura.avaliacoes;
       });
     } catch (e) {
       if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
@@ -118,6 +121,34 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
   }
 
   Widget _divider() => const Divider(height: 32, color: Colors.white24, thickness: 1);
+
+  Widget _avaliacaoItem(AvaliacaoModel avaliacao) {
+    return Container(
+      margin: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(color: Colors.white12, borderRadius: BorderRadius.circular(8)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: List.generate(5, (index) {
+              final i = index + 1;
+              return Icon(i <= (avaliacao.nota) ? Icons.star : Icons.star_border, color: Colors.amber, size: 22);
+            }),
+          ),
+          const SizedBox(height: 6),
+
+          if (avaliacao.comentario != null && avaliacao.comentario!.trim().isNotEmpty)
+            Text(avaliacao.comentario!, style: _textStyleValor),
+          const SizedBox(height: 6),
+          Text(
+            "Por: ${avaliacao.oferta.contratante.nome}",
+            style: _textStyleValor.copyWith(fontStyle: FontStyle.italic, fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +210,18 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
                     _divider(),
                     Text("Status da Candidatura", style: _textStyleTopico),
                     _infoRow("Status", _status?.descricao ?? ''),
+
+                    _divider(),
+                    Text("Avaliações", style: _textStyleTopico),
+
+                    if (_avaliacoes != null && _avaliacoes!.isNotEmpty) ...[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _avaliacoes!.map((avaliacao) => _avaliacaoItem(avaliacao)).toList(),
+                      ),
+                    ] else ...[
+                      _infoRow("", "Ainda não há avaliações."),
+                    ],
                   ],
                 ),
               ),
