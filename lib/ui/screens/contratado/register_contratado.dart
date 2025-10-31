@@ -23,7 +23,7 @@ class _RegisterContratadoState extends State<RegisterContratado> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  
+
   final ProfileController _contratadoProfileController = ProfileController();
   bool _isLoading = false;
 
@@ -44,86 +44,93 @@ class _RegisterContratadoState extends State<RegisterContratado> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Contratado", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+      ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Contratado", style: AppTextStyles.title.copyWith(fontSize: 26)),
-                const SizedBox(height: 24),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
+                    const SizedBox(height: 16),
 
-                CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
-                const SizedBox(height: 16),
+                    CustomTextField(
+                      hintText: "Telefone",
+                      icon: Icons.phone,
+                      controller: _telefoneController,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')}),
+                      ],
+                      keyboardType: TextInputType.phone,
+                    ),
+                    const SizedBox(height: 16),
 
-                CustomTextField(
-                  hintText: "Telefone",
-                  icon: Icons.phone,
-                  controller: _telefoneController,
-                  inputFormatters: [
-                    MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')}),
+                    CustomTextField(
+                      hintText: "Data de Nascimento",
+                      icon: Icons.calendar_month,
+                      controller: _dataNascimentoController,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
+                      ],
+                      keyboardType: TextInputType.datetime,
+                    ),
+                    const SizedBox(height: 16),
+
+                    CustomTextField(
+                      hintText: "CPF",
+                      icon: Icons.person,
+                      controller: _cpfController,
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')}),
+                      ],
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 16),
+
+                    CustomTextField(
+                      hintText: "RG",
+                      icon: Icons.badge,
+                      controller: _rgController,
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 16),
+
+                    CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
+                    const SizedBox(height: 16),
+
+                    CustomTextField(
+                      hintText: "Senha",
+                      obscureText: true,
+                      icon: Icons.lock,
+                      controller: _passwordController,
+                    ),
+                    const SizedBox(height: 16),
+
+                    CustomTextField(
+                      hintText: "Confirmar Senha",
+                      obscureText: true,
+                      icon: Icons.lock_outline,
+                      controller: _confirmPasswordController,
+                    ),
                   ],
-                  keyboardType: TextInputType.phone,
                 ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Data de Nascimento",
-                  icon: Icons.calendar_month,
-                  controller: _dataNascimentoController,
-                  inputFormatters: [
-                    MaskTextInputFormatter(mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')}),
-                  ],
-                  keyboardType: TextInputType.datetime,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "CPF",
-                  icon: Icons.person,
-                  controller: _cpfController,
-                  inputFormatters: [
-                    MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')}),
-                  ],
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "RG",
-                  icon: Icons.badge,
-                  controller: _rgController,
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Senha",
-                  obscureText: true,
-                  icon: Icons.lock,
-                  controller: _passwordController,
-                ),
-                const SizedBox(height: 16),
-
-                CustomTextField(
-                  hintText: "Confirmar Senha",
-                  obscureText: true,
-                  icon: Icons.lock_outline,
-                  controller: _confirmPasswordController,
-                ),
-                const SizedBox(height: 24),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(text: "Cadastrar", onPressed: () => _isLoading ? null : _registerContratante()),
-                ),
-              ],
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: CustomButton(text: "Cadastrar", onPressed: () => _isLoading ? null : _registerContratante()),
+              ),
+            ),
+          ],
         ),
       ),
     );

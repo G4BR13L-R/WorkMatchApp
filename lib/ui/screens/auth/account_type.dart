@@ -10,34 +10,35 @@ class AccountType extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Tipo de Conta", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+      ),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Tipo de conta", style: AppTextStyles.title.copyWith(fontSize: 32)),
-                const SizedBox(height: 40),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(
-                    text: "Contratante",
-                    onPressed: () => Navigator.pushNamed(context, '/contratante/register'),
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16, left: 24, right: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  text: "Contratante",
+                  onPressed: () => Navigator.pushNamed(context, '/contratante/register'),
                 ),
-                const SizedBox(height: 20),
+              ),
+              const SizedBox(height: 20),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(
-                    text: "Contratado",
-                    onPressed: () => Navigator.pushNamed(context, '/contratado/register'),
-                  ),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  text: "Contratado",
+                  onPressed: () => Navigator.pushNamed(context, '/contratado/register'),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
