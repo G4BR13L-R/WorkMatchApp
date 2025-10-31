@@ -3,7 +3,7 @@ import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 
-Future<bool> CustomDialog(BuildContext context, String title, String content, {String type = 'confirm'}) async {
+Future<bool> customDialog(BuildContext context, String title, String content, {String type = 'confirm'}) async {
   final bool isDelete = type == 'delete';
 
   final Color yesColor = isDelete ? AppColors.warning : AppColors.primary;

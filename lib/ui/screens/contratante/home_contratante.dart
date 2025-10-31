@@ -140,7 +140,7 @@ class _HomeContratanteState extends State<HomeContratante> {
     setState(() => _isLoading = true);
 
     try {
-      final status = await CustomDialog(
+      final status = await customDialog(
         context,
         'Confirmar Exclusão',
         'Deseja realmente excluir esta oferta?',
