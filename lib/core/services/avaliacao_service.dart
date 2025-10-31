@@ -48,7 +48,7 @@ class AvaliacaoService {
     if (response.statusCode != 201) return ThrowException.request(response.body);
 
     final data = jsonDecode(response.body);
-    return AvaliacaoModel.fromJson(data['user']);
+    return AvaliacaoModel.fromJson(data);
   }
 
   Future<bool> update(
