@@ -5,9 +5,11 @@ import 'package:work_match_app/ui/screens/auth/account_type.dart';
 import 'package:work_match_app/ui/screens/auth/login.dart';
 import 'package:work_match_app/ui/screens/avaliar_usuario.dart';
 import 'package:work_match_app/ui/screens/contratado/home_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/oferta_finalizada_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/profile_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/register_contratado.dart';
 import 'package:work_match_app/ui/screens/contratado/security_account_contratado.dart';
+import 'package:work_match_app/ui/screens/contratado/visualizar_oferta_contratado.dart';
 import 'package:work_match_app/ui/screens/contratante/candidaturas_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/home_contratante.dart';
 import 'package:work_match_app/ui/screens/contratante/oferta_contratante.dart';
@@ -57,6 +59,8 @@ class MyApp extends StatelessWidget {
         '/contratado/home': (context) => const HomeContratado(),
         '/contratado/profile': (context) => const ProfileContratado(),
         '/contratado/security_account': (context) => const SecurityAccountContratado(),
+        '/contratado/oferta_finalizada': (context) => const OfertaFinalizadaContratado(),
+        '/contratado/visualizar_oferta': (context) => const VisualizarOfertaContratado(),
       },
     );
   }

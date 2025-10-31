@@ -4,17 +4,16 @@ import 'package:work_match_app/core/models/oferta_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/oferta_card.dart';
 
-class HomeContratado extends StatefulWidget {
-  const HomeContratado({super.key});
+class OfertaFinalizadaContratado extends StatefulWidget {
+  const OfertaFinalizadaContratado({super.key});
 
   @override
-  State<HomeContratado> createState() => _HomeContratadoState();
+  State<OfertaFinalizadaContratado> createState() => _OfertaFinalizadaContratadoState();
 }
 
-class _HomeContratadoState extends State<HomeContratado> {
+class _OfertaFinalizadaContratadoState extends State<OfertaFinalizadaContratado> {
   final OfertaController _ofertaController = OfertaController();
 
   List<OfertaModel> _ofertas = [];
@@ -26,17 +25,17 @@ class _HomeContratadoState extends State<HomeContratado> {
     _loadOfertas();
   }
 
-  Future<void> _loadOfertas({int? cidadeId}) async {
+  Future<void> _loadOfertas() async {
     setState(() => _isFetching = true);
 
     try {
-      final ofertas = await _ofertaController.index(status: false, cidadeId: cidadeId); // Ofertas não finalizadas.
+      final ofertas = await _ofertaController.index(status: true); // Ofertas finalizadas.
 
-      if (mounted) setState(() => _ofertas = ofertas);
+      setState(() => _ofertas = ofertas);
     } catch (e) {
       if (mounted) SnackbarHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
     } finally {
-      if (mounted) setState(() => _isFetching = false);
+      setState(() => _isFetching = false);
     }
   }
 
@@ -48,39 +47,19 @@ class _HomeContratadoState extends State<HomeContratado> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: Text("Ofertas Finalizadas", style: AppTextStyles.title.copyWith(fontSize: 22)),
+        iconTheme: const IconThemeData(color: AppColors.textLight),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Ofertas Finalizadas',
-                      backgroundColor: AppColors.primary,
-                      textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                      onPressed: () => Navigator.pushNamed(context, '/contratado/oferta_finalizada'),
-                    ),
-                  ),
-
-                  SizedBox(width: 30),
-
-                  GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/contratado/profile'),
-                    child: const CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.primary,
-                      child: Icon(Icons.person, color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
               if (_ofertas.isEmpty)
-                Expanded(child: Center(child: Text("Nenhuma oferta cadastrada", style: AppTextStyles.subtitle)))
+                Expanded(child: Center(child: Text("Nenhuma oferta finalizada", style: AppTextStyles.subtitle)))
               else
                 Expanded(
                   child: ListView.builder(
@@ -95,7 +74,7 @@ class _HomeContratadoState extends State<HomeContratado> {
                             Navigator.pushNamed(
                               context,
                               '/contratado/visualizar_oferta',
-                              arguments: {'oferta_id': oferta.id},
+                              arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
                             );
                           },
                           child: OfertaCard(
@@ -105,6 +84,18 @@ class _HomeContratadoState extends State<HomeContratado> {
                             dataFim: oferta.dataFim,
                             isFinalizada: oferta.finalizada,
                             isContratante: false,
+                            onAvaliar:
+                                () => Navigator.pushNamed(
+                                  context,
+                                  '/avaliar_usuario',
+                                  arguments: {
+                                    'autor_id': oferta.candidaturas![0].id,
+                                    'autor_tipo': 'contratado',
+                                    'destinatario_id': oferta.contratante.id,
+                                    'destinatario_tipo': 'contratante',
+                                    'oferta_id': oferta.id,
+                                  },
+                                ),
                           ),
                         ),
                       );
