@@ -33,7 +33,7 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
   bool _isFetching = false;
 
   int? _ofertaId;
-  late bool _ofertaFinalizada;
+  bool _ofertaFinalizada = false;
 
   final _textStyleTitulo = TextStyle(
     fontSize: 26,
@@ -55,8 +55,10 @@ class _VisualizarOfertaContratanteState extends State<VisualizarOfertaContratant
 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-      _ofertaId = args?['oferta_id'] as int?;
-      _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+      setState(() {
+        _ofertaId = args?['oferta_id'] as int?;
+        _ofertaFinalizada = args?['oferta_finalizada'] as bool? ?? false;
+      });
 
       if (_ofertaId != null) {
         _loadOferta(_ofertaId!);

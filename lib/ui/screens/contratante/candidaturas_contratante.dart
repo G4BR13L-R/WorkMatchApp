@@ -7,6 +7,7 @@ import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
 import 'package:work_match_app/ui/widgets/candidatura_card.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
+import 'package:work_match_app/ui/widgets/custom_dialog.dart';
 
 class CandidaturasContratante extends StatefulWidget {
   const CandidaturasContratante({super.key});
@@ -132,7 +133,7 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                   child: CustomButton(
                     text: "Finalizar Oferta",
                     backgroundColor: AppColors.primary,
@@ -167,10 +168,16 @@ class _CandidaturasContratanteState extends State<CandidaturasContratante> {
   }
 
   Future<void> _finalizarOferta() async {
+    bool confirm = await customDialog(context, 'Finalizar Oferta', 'Tem certeza que deseja finalizar esta oferta?');
+
+    if (!confirm) return;
+
     setState(() => _isLoading = true);
 
     try {
-      if (_ofertaId != null) await _contratanteOfertaController.finalizarOferta(_ofertaId!);
+      if (_ofertaId == null) throw Exception('Oferta não encontrada');
+
+      await _contratanteOfertaController.finalizarOferta(_ofertaId!);
 
       if (!mounted) return;
 

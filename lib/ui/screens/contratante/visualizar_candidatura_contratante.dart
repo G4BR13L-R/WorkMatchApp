@@ -228,7 +228,7 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
             ),
 
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
               child: Row(
                 children: [
                   if (_oferta != null && _oferta!.finalizada == false) ...[
