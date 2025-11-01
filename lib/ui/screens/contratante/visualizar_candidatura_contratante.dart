@@ -142,7 +142,7 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
             Text(avaliacao.comentario!, style: _textStyleValor),
           const SizedBox(height: 6),
           Text(
-            "Por: ${avaliacao.oferta.contratante.nome}",
+            "Por: ${avaliacao.autor_nome}",
             style: _textStyleValor.copyWith(fontStyle: FontStyle.italic, fontSize: 14),
           ),
         ],
