@@ -61,14 +61,16 @@ class _HomeContratadoState extends State<HomeContratado> {
                       text: 'Ofertas Finalizadas',
                       backgroundColor: AppColors.primary,
                       textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                      onPressed: () => Navigator.pushNamed(context, '/contratado/oferta_finalizada'),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/contratado/oferta_finalizada').then((_) => _loadOfertas());
+                      },
                     ),
                   ),
 
                   SizedBox(width: 30),
 
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/contratado/profile'),
+                    onTap: () => Navigator.pushNamed(context, '/contratado/profile').then((_) => _loadOfertas()),
                     child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: AppColors.primary,
@@ -96,7 +98,7 @@ class _HomeContratadoState extends State<HomeContratado> {
                               context,
                               '/contratado/visualizar_oferta',
                               arguments: {'oferta_id': oferta.id},
-                            );
+                            ).then((_) => _loadOfertas());
                           },
                           child: OfertaCard(
                             titulo: oferta.titulo,
