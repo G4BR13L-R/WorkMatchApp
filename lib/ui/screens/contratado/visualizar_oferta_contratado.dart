@@ -172,13 +172,22 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Título da vaga
-                    Text(_titulo?.trim() ?? '', style: _textStyleTitulo),
+                    if (_candidaturas != null && _candidaturas!.isNotEmpty) ...[
+                      Text("${_titulo?.trim() ?? ''} (${_candidaturas![0].status.descricao})", style: _textStyleTitulo),
+                    ] else ...[
+                      Text(_titulo?.trim() ?? '', style: _textStyleTitulo),
+                    ],
+
                     const SizedBox(height: 16),
 
                     // Salário e período
                     if (_salario != null) _infoRow("Salário", "R\$ ${_salario!.toStringAsFixed(2)}"),
                     if (_dataInicio != null || _dataFim != null)
                       _infoRow("Período", "${_dataInicio ?? '-'} até ${_dataFim ?? '-'}"),
+
+                    if (_candidaturas != null && _candidaturas!.isNotEmpty && _candidaturas![0].status.id == 2) ...[
+                      _infoRow('Status:', 'Aguarde o contato do contratante!'),
+                    ],
 
                     _divider(),
 
@@ -224,7 +233,10 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
               ),
             ),
 
-            if (_ofertaFinalizada) ...[
+            if (_ofertaFinalizada &&
+                _candidaturas != null &&
+                _candidaturas!.isNotEmpty &&
+                _candidaturas![0].status.id == 2) ...[
               SizedBox(
                 width: double.infinity,
                 child: Padding(

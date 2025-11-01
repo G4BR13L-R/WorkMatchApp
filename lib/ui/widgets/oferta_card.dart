@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_match_app/core/models/status_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
@@ -11,6 +12,7 @@ class OfertaCard extends StatelessWidget {
   final String dataFim;
   final bool isFinalizada;
   final bool isContratante;
+  final StatusModel? status;
   final VoidCallback? onEditar;
   final VoidCallback? onExcluir;
   final VoidCallback? onCandidatos;
@@ -24,6 +26,7 @@ class OfertaCard extends StatelessWidget {
     required this.dataFim,
     required this.isFinalizada,
     required this.isContratante,
+    this.status,
     this.onEditar,
     this.onExcluir,
     this.onCandidatos,
@@ -35,11 +38,13 @@ class OfertaCard extends StatelessWidget {
     String dataInicio = FormatHelper.formatDateToBR(this.dataInicio);
     String dataFim = FormatHelper.formatDateToBR(this.dataFim);
 
+    final styleCard = {1: AppColors.primary, 2: AppColors.accent, 3: AppColors.warning};
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.inputBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary),
+        border: Border.all(color: styleCard[status?.id] ?? AppColors.primary),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -51,6 +56,9 @@ class OfertaCard extends StatelessWidget {
           Text('Salário: R\$ ${salario.toStringAsFixed(2)}', style: AppTextStyles.subtitleOferta),
           Text('Data de Início: $dataInicio', style: AppTextStyles.subtitleOferta),
           Text('Data de Fim: $dataFim', style: AppTextStyles.subtitleOferta),
+
+          if (status != null) ...[Text('Status: ${status!.descricao}', style: AppTextStyles.subtitleOferta)],
+
           const SizedBox(height: 16),
 
           Row(
@@ -91,7 +99,7 @@ class OfertaCard extends StatelessWidget {
                 ],
               ],
 
-              if (!isContratante && isFinalizada) ...[
+              if (!isContratante && isFinalizada && status != null && status!.id == 2) ...[
                 Expanded(
                   child: CustomButton(
                     text: 'Avaliar',

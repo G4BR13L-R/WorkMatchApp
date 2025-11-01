@@ -82,6 +82,10 @@ class _OfertaFinalizadaContratadoState extends State<OfertaFinalizadaContratado>
                             salario: oferta.salario,
                             dataInicio: oferta.dataInicio,
                             dataFim: oferta.dataFim,
+                            status:
+                                oferta.candidaturas != null && oferta.candidaturas!.isNotEmpty
+                                    ? oferta.candidaturas![0].status
+                                    : null,
                             isFinalizada: oferta.finalizada,
                             isContratante: false,
                             onAvaliar:
