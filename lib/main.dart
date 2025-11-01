@@ -21,6 +21,7 @@ import 'package:work_match_app/ui/screens/contratante/visualizar_candidatura_con
 import 'package:work_match_app/ui/screens/contratante/visualizar_oferta_contratante.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   final authData = await SecureStorageService.getAuthData();
   runApp(MyApp(userType: authData['type'] ?? ''));
