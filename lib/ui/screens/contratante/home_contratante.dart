@@ -52,7 +52,7 @@ class _HomeContratanteState extends State<HomeContratante> {
       backgroundColor: AppColors.background,
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        onPressed: () => Navigator.pushNamed(context, '/contratante/oferta'),
+        onPressed: () => Navigator.pushNamed(context, '/contratante/oferta').then((_) => _loadOfertas()),
         child: const Icon(Icons.add, color: Colors.black),
       ),
       body: SafeArea(
@@ -68,14 +68,18 @@ class _HomeContratanteState extends State<HomeContratante> {
                       text: 'Ofertas Finalizadas',
                       backgroundColor: AppColors.primary,
                       textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-                      onPressed: () => Navigator.pushNamed(context, '/contratante/oferta_finalizada'),
+                      onPressed:
+                          () => Navigator.pushNamed(
+                            context,
+                            '/contratante/oferta_finalizada',
+                          ).then((_) => _loadOfertas()),
                     ),
                   ),
 
                   SizedBox(width: 30),
 
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/contratante/profile'),
+                    onTap: () => Navigator.pushNamed(context, '/contratante/profile').then((_) => _loadOfertas()),
                     child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: AppColors.primary,
@@ -103,7 +107,7 @@ class _HomeContratanteState extends State<HomeContratante> {
                               context,
                               '/contratante/visualizar_oferta',
                               arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
-                            );
+                            ).then((_) => _loadOfertas());
                           },
                           child: OfertaCard(
                             titulo: oferta.titulo,
@@ -117,11 +121,17 @@ class _HomeContratanteState extends State<HomeContratante> {
                                   context,
                                   '/contratante/candidaturas',
                                   arguments: {'oferta_id': oferta.id, 'oferta_finalizada': oferta.finalizada},
-                                ),
-                            onEditar: () => Navigator.pushNamed(context, '/contratante/oferta', arguments: oferta.id),
+                                ).then((_) => _loadOfertas()),
+                            onEditar:
+                                () => Navigator.pushNamed(
+                                  context,
+                                  '/contratante/oferta',
+                                  arguments: oferta.id,
+                                ).then((_) => _loadOfertas()),
                             onExcluir: () {
-                              if (_isLoading || oferta.id == null) return;
-                              _excluirOferta(oferta.id!);
+                              if (_isLoading == false && oferta.id != null) {
+                                _excluirOferta(oferta.id!);
+                              }
                             },
                           ),
                         ),
