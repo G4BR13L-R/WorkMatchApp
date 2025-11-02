@@ -1,7 +1,8 @@
 import 'dart:convert';
+
+import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/services/api_client.dart';
 import 'package:work_match_app/core/services/secure_storage_service.dart';
-import 'package:work_match_app/core/models/contratado_model.dart';
 
 class ProfileService {
   Future<ContratadoModel> show() async {
@@ -36,6 +37,7 @@ class ProfileService {
     String dataNascimento,
     String cpf,
     String? rg,
+    int cidadeId,
     String email,
     String password,
     String passwordConfirmation,
@@ -46,6 +48,7 @@ class ProfileService {
       'data_nascimento': dataNascimento,
       'cpf': cpf,
       'rg': rg,
+      'cidade_id': cidadeId,
       'email': email,
       'password': password,
       'password_confirmation': passwordConfirmation,

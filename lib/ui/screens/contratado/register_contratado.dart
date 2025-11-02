@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
+import 'package:work_match_app/core/models/cidade_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
+import 'package:work_match_app/ui/widgets/cidade_autocomplete.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/custom_text_field.dart';
 
@@ -23,6 +25,7 @@ class _RegisterContratadoState extends State<RegisterContratado> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  CidadeModel? _cidadeSelecionada;
 
   final ProfileController _contratadoProfileController = ProfileController();
   bool _isLoading = false;
@@ -37,6 +40,7 @@ class _RegisterContratadoState extends State<RegisterContratado> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _cidadeSelecionada = null;
     super.dispose();
   }
 
@@ -102,6 +106,14 @@ class _RegisterContratadoState extends State<RegisterContratado> {
                     ),
                     const SizedBox(height: 16),
 
+                    CidadeAutoComplete(
+                      initialValue: _cidadeSelecionada,
+                      onSelected: (cidade) {
+                        setState(() => _cidadeSelecionada = cidade);
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
                     CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
                     const SizedBox(height: 16),
 
@@ -146,6 +158,7 @@ class _RegisterContratadoState extends State<RegisterContratado> {
         _dataNascimentoController.text.trim(),
         _cpfController.text.trim(),
         _rgController.text.trim(),
+        _cidadeSelecionada?.id,
         _emailController.text.trim(),
         _passwordController.text.trim(),
         _confirmPasswordController.text.trim(),

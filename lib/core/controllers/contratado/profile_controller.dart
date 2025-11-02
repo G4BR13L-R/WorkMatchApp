@@ -15,6 +15,7 @@ class ProfileController {
     String dataNascimento,
     String cpf,
     String rg,
+    int? cidadeId,
     String email,
     String password,
     String passwordConfirmation,
@@ -24,13 +25,24 @@ class ProfileController {
     if (dataNascimento.isEmpty) throw Exception("o campo data de nascimento é obrigatório");
     if (dataNascimento.length < 10) throw Exception("o campo data de nascimento é inválido");
     if (cpf.isEmpty) throw Exception("o campo CPF é obrigatório");
+    if (cidadeId == null) throw Exception("o campo cidade é obrigatório");
     if (email.isEmpty) throw Exception("o campo email é obrigatório");
     if (password.isEmpty) throw Exception("o campo senha é obrigatório");
     if (passwordConfirmation.isEmpty) throw Exception("o campo confirmação de senha é obrigatório");
 
     dataNascimento = FormatHelper.formatDateToAPI(dataNascimento);
 
-    return await _profileService.store(nome, telefone, dataNascimento, cpf, rg, email, password, passwordConfirmation);
+    return await _profileService.store(
+      nome,
+      telefone,
+      dataNascimento,
+      cpf,
+      rg,
+      cidadeId,
+      email,
+      password,
+      passwordConfirmation,
+    );
   }
 
   Future<bool> update(
