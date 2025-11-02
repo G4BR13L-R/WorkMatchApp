@@ -190,7 +190,7 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
                       _infoRow("Período", "${_dataInicio ?? '-'} até ${_dataFim ?? '-'}"),
 
                     if (_candidaturas != null && _candidaturas!.isNotEmpty && _candidaturas![0].status.id == 2) ...[
-                      _infoRow('Status:', 'Aguarde o contato do contratante!'),
+                      _infoRow('Status', 'Aguarde o contato do contratante!'),
                     ],
 
                     _divider(),
