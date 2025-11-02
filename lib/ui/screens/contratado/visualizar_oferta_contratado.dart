@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/controllers/contratado/oferta_controller.dart';
 import 'package:work_match_app/core/models/avaliacao_model.dart';
 import 'package:work_match_app/core/models/candidatura_model.dart';
@@ -33,6 +34,9 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
   ContratanteModel? _contratante;
   List<CandidaturaModel>? _candidaturas;
   List<AvaliacaoModel>? _avaliacoes;
+
+  final _cnpjFormatter = MaskTextInputFormatter(mask: '##.###.###/####-##', filter: {"#": RegExp(r'[0-9]')});
+  final _telefoneFormatter = MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')});
 
   final OfertaController _ofertaController = OfertaController();
   bool _isFetching = false;
@@ -213,8 +217,8 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
                     Text("Contratante", style: _textStyleTopico),
                     const SizedBox(height: 8),
                     _infoRow('Nome', _contratante?.nomeFantasia ?? ''),
-                    _infoRow("CNPJ", _contratante?.cnpj ?? ''),
-                    _infoRow('Telefone', _contratante?.telefone ?? ''),
+                    _infoRow("CNPJ", _cnpjFormatter.maskText(_contratante?.cnpj ?? '')),
+                    _infoRow('Telefone', _telefoneFormatter.maskText(_contratante?.telefone ?? '')),
                     _infoRow("Email", _contratante?.email ?? ''),
 
                     _divider(),

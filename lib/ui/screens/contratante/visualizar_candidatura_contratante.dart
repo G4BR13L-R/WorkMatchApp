@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:work_match_app/core/controllers/contratante/candidatura_controller.dart';
 import 'package:work_match_app/core/models/avaliacao_model.dart';
 import 'package:work_match_app/core/models/candidatura_model.dart';
@@ -36,6 +37,9 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
   StatusModel? _status;
   OfertaModel? _oferta;
   List<AvaliacaoModel>? _avaliacoes;
+
+  final _cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+  final _telefoneFormatter = MaskTextInputFormatter(mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')});
 
   final CandidaturaController _candidaturaController = CandidaturaController();
   bool _isFetching = false;
@@ -78,9 +82,9 @@ class _VisualizarCandidaturaContratanteState extends State<VisualizarCandidatura
 
       setState(() {
         _nome = candidatura.contratado.nome;
-        _telefone = candidatura.contratado.telefone;
+        _telefone = _telefoneFormatter.maskText(candidatura.contratado.telefone);
         _dataNascimento = FormatHelper.formatDateToBR(candidatura.contratado.dataNascimento);
-        _cpf = candidatura.contratado.cpf;
+        _cpf = _cpfFormatter.maskText(candidatura.contratado.cpf);
         _rg = candidatura.contratado.rg;
         _formacoes = candidatura.contratado.formacoes;
         _habilidades = candidatura.contratado.habilidades;
