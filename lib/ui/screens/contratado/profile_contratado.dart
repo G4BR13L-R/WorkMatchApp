@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:work_match_app/core/controllers/auth_controller.dart';
+import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
+import 'package:work_match_app/core/models/cidade_model.dart';
+import 'package:work_match_app/core/models/contratado_model.dart';
 import 'package:work_match_app/core/theme/app_colors.dart';
 import 'package:work_match_app/core/theme/app_text_styles.dart';
 import 'package:work_match_app/core/utils/format_helper.dart';
 import 'package:work_match_app/core/utils/snackbar_helper.dart';
-import 'package:work_match_app/core/models/cidade_model.dart';
-import 'package:work_match_app/core/models/contratado_model.dart';
-import 'package:work_match_app/core/controllers/auth_controller.dart';
-import 'package:work_match_app/core/controllers/contratado/profile_controller.dart';
 import 'package:work_match_app/ui/widgets/cidade_autocomplete.dart';
 import 'package:work_match_app/ui/widgets/custom_button.dart';
 import 'package:work_match_app/ui/widgets/custom_text_field.dart';
@@ -103,155 +103,167 @@ class _ProfileContratadoState extends State<ProfileContratado> {
       return const Scaffold(backgroundColor: AppColors.background, body: Center(child: CircularProgressIndicator()));
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) Navigator.pop(context, true);
+      },
+      child: Scaffold(
         backgroundColor: AppColors.background,
-        elevation: 0,
-        title: Text("Editar Perfil", style: AppTextStyles.title.copyWith(fontSize: 22)),
-        iconTheme: const IconThemeData(color: AppColors.textLight),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(
-                  text: "Segurança da Conta",
-                  backgroundColor: AppColors.accent,
-                  onPressed: () => Navigator.pushNamed(context, '/contratado/security_account'),
+        appBar: AppBar(
+          backgroundColor: AppColors.background,
+          elevation: 0,
+          title: Text("Editar Perfil", style: AppTextStyles.title.copyWith(fontSize: 22)),
+          iconTheme: const IconThemeData(color: AppColors.textLight),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(
+                    text: "Segurança da Conta",
+                    backgroundColor: AppColors.accent,
+                    onPressed: () => Navigator.pushNamed(context, '/contratado/security_account'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
-              const SizedBox(height: 16),
+                CustomTextField(hintText: "Nome", icon: Icons.person, controller: _nomeController),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                hintText: "Telefone",
-                icon: Icons.phone,
-                controller: _telefoneController,
-                inputFormatters: [_telefoneFormatter],
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  hintText: "Telefone",
+                  icon: Icons.phone,
+                  controller: _telefoneController,
+                  inputFormatters: [_telefoneFormatter],
+                  keyboardType: TextInputType.phone,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
-              const SizedBox(height: 16),
+                CustomTextField(hintText: "Email", icon: Icons.email, controller: _emailController),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                hintText: "Data de Nascimento",
-                icon: Icons.cake,
-                controller: _dataNascimentoController,
-                inputFormatters: [_dataNascimentoFormatter],
-                keyboardType: TextInputType.datetime,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  hintText: "Data de Nascimento",
+                  icon: Icons.cake,
+                  controller: _dataNascimentoController,
+                  inputFormatters: [_dataNascimentoFormatter],
+                  keyboardType: TextInputType.datetime,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                hintText: "CPF",
-                icon: Icons.account_box_rounded,
-                controller: _cpfController,
-                inputFormatters: [_cpfFormatter],
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16),
+                CustomTextField(
+                  hintText: "CPF",
+                  icon: Icons.account_box_rounded,
+                  controller: _cpfController,
+                  inputFormatters: [_cpfFormatter],
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 16),
 
-              CustomTextField(
-                hintText: "RG",
-                icon: Icons.badge,
-                controller: _rgController,
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 40),
+                CustomTextField(
+                  hintText: "RG",
+                  icon: Icons.badge,
+                  controller: _rgController,
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 40),
 
-              CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
-              const SizedBox(height: 16),
+                CustomTextField(hintText: "Logradouro", icon: Icons.location_on, controller: _logradouroController),
+                const SizedBox(height: 16),
 
-              Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: CustomTextField(
-                      hintText: 'Número',
-                      icon: Icons.numbers,
-                      controller: _numeroController,
-                      keyboardType: TextInputType.number,
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: CustomTextField(
+                        hintText: 'Número',
+                        icon: Icons.numbers,
+                        controller: _numeroController,
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
-                  ),
 
-                  SizedBox(width: 5),
+                    SizedBox(width: 5),
 
-                  Expanded(
-                    flex: 4,
-                    child: CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              CustomTextField(
-                hintText: "Complemento",
-                icon: Icons.add_location_alt,
-                controller: _complementoController,
-              ),
-              const SizedBox(height: 16),
-
-              CidadeAutoComplete(
-                initialValue: _cidadeSelecionada,
-                onSelected: (cidade) {
-                  setState(() => _cidadeSelecionada = cidade);
-                },
-              ),
-              const SizedBox(height: 40),
-
-              CustomTextField(
-                hintText: "Formações",
-                icon: Icons.text_fields,
-                controller: _formacoesController,
-                keyboardType: TextInputType.multiline,
-                minLine: 4,
-                maxLine: null,
-              ),
-              const SizedBox(height: 16),
-
-              CustomTextField(
-                hintText: "Habilidades",
-                icon: Icons.text_fields,
-                controller: _habilidadesController,
-                keyboardType: TextInputType.multiline,
-                minLine: 4,
-                maxLine: null,
-              ),
-              const SizedBox(height: 16),
-
-              CustomTextField(
-                hintText: "Experiencias",
-                icon: Icons.text_fields,
-                controller: _experienciasController,
-                keyboardType: TextInputType.multiline,
-                minLine: 4,
-                maxLine: null,
-              ),
-              const SizedBox(height: 24),
-
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(text: "Salvar Alterações", onPressed: () => _isLoading ? null : _updateProfile()),
-              ),
-              const SizedBox(height: 16),
-
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(
-                  text: "Sair",
-                  backgroundColor: AppColors.warning,
-                  onPressed: () => _isLoading ? null : _logout(),
+                    Expanded(
+                      flex: 4,
+                      child: CustomTextField(hintText: "Bairro", icon: Icons.home_work, controller: _bairroController),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+
+                CustomTextField(
+                  hintText: "Complemento",
+                  icon: Icons.add_location_alt,
+                  controller: _complementoController,
+                ),
+                const SizedBox(height: 16),
+
+                CidadeAutoComplete(
+                  initialValue: _cidadeSelecionada,
+                  onSelected: (cidade) {
+                    setState(() => _cidadeSelecionada = cidade);
+                  },
+                ),
+                const SizedBox(height: 40),
+
+                CustomTextField(
+                  hintText: "Formações",
+                  icon: Icons.text_fields,
+                  controller: _formacoesController,
+                  keyboardType: TextInputType.multiline,
+                  minLine: 4,
+                  maxLine: null,
+                ),
+                const SizedBox(height: 16),
+
+                CustomTextField(
+                  hintText: "Habilidades",
+                  icon: Icons.text_fields,
+                  controller: _habilidadesController,
+                  keyboardType: TextInputType.multiline,
+                  minLine: 4,
+                  maxLine: null,
+                ),
+                const SizedBox(height: 16),
+
+                CustomTextField(
+                  hintText: "Experiencias",
+                  icon: Icons.text_fields,
+                  controller: _experienciasController,
+                  keyboardType: TextInputType.multiline,
+                  minLine: 4,
+                  maxLine: null,
+                ),
+                const SizedBox(height: 24),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(text: "Salvar Alterações", onPressed: () => _isLoading ? null : _updateProfile()),
+                ),
+                const SizedBox(height: 16),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(
+                    text: "Sair",
+                    backgroundColor: AppColors.warning,
+                    onPressed: () => _isLoading ? null : _logout(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

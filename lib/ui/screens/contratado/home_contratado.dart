@@ -70,7 +70,11 @@ class _HomeContratadoState extends State<HomeContratado> {
                   SizedBox(width: 30),
 
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/contratado/profile').then((_) => _loadOfertas()),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/contratado/profile').then((result) {
+                        if (result == true) _loadOfertas();
+                      });
+                    },
                     child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: AppColors.primary,
