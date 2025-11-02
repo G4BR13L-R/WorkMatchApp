@@ -88,18 +88,21 @@ class _OfertaFinalizadaContratadoState extends State<OfertaFinalizadaContratado>
                                     : null,
                             isFinalizada: oferta.finalizada,
                             isContratante: false,
-                            onAvaliar:
-                                () => Navigator.pushNamed(
-                                  context,
-                                  '/avaliar_usuario',
-                                  arguments: {
-                                    'autor_id': oferta.candidaturas![0].id,
-                                    'autor_tipo': 'contratado',
-                                    'destinatario_id': oferta.contratante.id,
-                                    'destinatario_tipo': 'contratante',
-                                    'oferta_id': oferta.id,
-                                  },
-                                ),
+                            onAvaliar: () {
+                              if (oferta.candidaturas == null || oferta.candidaturas!.isEmpty) return;
+
+                              Navigator.pushNamed(
+                                context,
+                                '/avaliar_usuario',
+                                arguments: {
+                                  'autor_id': oferta.candidaturas![0].contratado.id,
+                                  'autor_tipo': 'contratado',
+                                  'destinatario_id': oferta.contratante.id,
+                                  'destinatario_tipo': 'contratante',
+                                  'oferta_id': oferta.id,
+                                },
+                              );
+                            },
                           ),
                         ),
                       );

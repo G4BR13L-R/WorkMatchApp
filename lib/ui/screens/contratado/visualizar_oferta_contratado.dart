@@ -248,19 +248,17 @@ class _VisualizarOfertaContratadoState extends State<VisualizarOfertaContratado>
                   child: CustomButton(
                     text: "Avaliar",
                     onPressed: () {
-                      if (_candidaturas != null && _contratante != null) {
-                        Navigator.pushNamed(
-                          context,
-                          '/avaliar_usuario',
-                          arguments: {
-                            'autor_id': _candidaturas![0].id,
-                            'autor_tipo': 'contratado',
-                            'destinatario_id': _contratante!.id,
-                            'destinatario_tipo': 'contratante',
-                            'oferta_id': _ofertaId,
-                          },
-                        );
-                      }
+                      Navigator.pushNamed(
+                        context,
+                        '/avaliar_usuario',
+                        arguments: {
+                          'autor_id': _candidaturas![0].contratado.id,
+                          'autor_tipo': 'contratado',
+                          'destinatario_id': _contratante!.id,
+                          'destinatario_tipo': 'contratante',
+                          'oferta_id': _ofertaId,
+                        },
+                      );
                     },
                   ),
                 ),
