@@ -18,7 +18,7 @@ class AvaliacaoService {
     paramsUrl += '&destinatario_tipo=$destinatarioTipo';
     paramsUrl += '&oferta_id=$ofertaId';
 
-    final response = await ApiClient.get('/avaliacao?$paramsUrl');
+    final response = await ApiClient.get('/avaliacoes?$paramsUrl');
 
     if (response.statusCode != 200) return ThrowException.request(response.body);
 
@@ -35,7 +35,7 @@ class AvaliacaoService {
     int nota,
     String? comentario,
   ) async {
-    final response = await ApiClient.post('/avaliacao', {
+    final response = await ApiClient.post('/avaliacoes', {
       'autor_id': autorId,
       'autor_tipo': autorTipo,
       'destinatario_id': destinatarioId,
@@ -61,7 +61,7 @@ class AvaliacaoService {
     int nota,
     String? comentario,
   ) async {
-    final response = await ApiClient.put('/avaliacao/$id', {
+    final response = await ApiClient.put('/avaliacoes/$id', {
       'autor_id': autorId,
       'autor_tipo': autorTipo,
       'destinatario_id': destinatarioId,
@@ -77,7 +77,7 @@ class AvaliacaoService {
   }
 
   Future<bool> destroy(int id) async {
-    final response = await ApiClient.delete('/avaliacao/$id');
+    final response = await ApiClient.delete('/avaliacoes/$id');
 
     if (response.statusCode != 200) return ThrowException.request(response.body);
 
