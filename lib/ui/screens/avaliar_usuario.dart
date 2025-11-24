@@ -108,36 +108,42 @@ class _AvaliarUsuarioState extends State<AvaliarUsuario> {
         iconTheme: const IconThemeData(color: AppColors.textLight),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text('Selecione a nota:', style: AppTextStyles.subtitle),
-              const SizedBox(height: 10),
-              _buildEstrelas(),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('Selecione a nota:', style: AppTextStyles.subtitle),
+                    const SizedBox(height: 10),
+                    _buildEstrelas(),
 
-              const SizedBox(height: 30),
-              const Text('Motivo:', style: AppTextStyles.subtitle),
-              const SizedBox(height: 10),
+                    const SizedBox(height: 30),
+                    const Text('Motivo:', style: AppTextStyles.subtitle),
+                    const SizedBox(height: 10),
 
-              CustomTextField(
-                hintText: 'Descreva o motivo da sua avaliação',
-                icon: Icons.text_fields,
-                controller: _motivoController,
-                minLine: 8,
-                maxLine: null,
+                    CustomTextField(
+                      hintText: 'Descreva o motivo da sua avaliação',
+                      icon: Icons.text_fields,
+                      controller: _motivoController,
+                      minLine: 8,
+                      maxLine: null,
+                    ),
+
+                    SizedBox(height: 30),
+
+                    CustomButton(
+                      text: 'Enviar Avaliação',
+                      backgroundColor: AppColors.primary,
+                      onPressed: _isLoading ? null : _enviarAvaliacao,
+                    ),
+                  ],
+                ),
               ),
-
-              Spacer(),
-
-              CustomButton(
-                text: 'Enviar Avaliação',
-                backgroundColor: AppColors.primary,
-                onPressed: _isLoading ? null : _enviarAvaliacao,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
